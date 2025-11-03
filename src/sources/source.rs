@@ -16,6 +16,7 @@ pub enum SourceType {
     Custom(CustomSource),
 }
 
+#[async_trait]
 impl Source for SourceType {
     fn name(&self) -> &str {
         match self {
@@ -47,22 +48,22 @@ impl Source for SourceType {
 
 // These will be implemented in their respective modules
 pub struct NewsSource {
-    name: String,
-    base_url: String,
+    pub name: String,
+    pub base_url: String,
 }
 
 pub struct EcommerceSource {
-    name: String,
-    base_url: String,
+    pub name: String,
+    pub base_url: String,
 }
 
 pub struct SocialSource {
-    name: String,
-    base_url: String,
+    pub name: String,
+    pub base_url: String,
 }
 
 pub struct CustomSource {
-    name: String,
-    base_url: String,
-    selectors: Vec<String>,
+    pub name: String,
+    pub base_url: String,
+    pub selectors: Vec<String>,
 }

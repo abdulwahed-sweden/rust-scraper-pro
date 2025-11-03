@@ -3,7 +3,6 @@ pub mod sources;
 pub mod processors;
 pub mod output;
 pub mod utils;
-pub mod config;
 
 // Re-exports for easier access
 pub use core::models::ScrapedData;
@@ -28,5 +27,8 @@ pub mod prelude {
         database::{DatabaseOutput, PostgresOutput, SqliteOutput},
     };
     pub use crate::utils::cache::HtmlCache;
-    pub use crate::config::Config;
+    pub use crate::core::config::Config;
+    pub use crate::core::scraper::ScraperEngine;
+    pub use crate::sources::{NewsSource, EcommerceSource, SocialSource, CustomSource};
+    pub use std::sync::Arc;
 }

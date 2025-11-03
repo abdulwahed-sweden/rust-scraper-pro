@@ -19,22 +19,23 @@ pub struct ScraperEngine {
 
 impl ScraperEngine {
     pub fn new(
-        config: crate::config::Config, 
+        config: crate::core::config::Config,
         pipeline: ProcessingPipeline,
         cache: Option<Arc<HtmlCache>>,
     ) -> Self {
+        let scraping_config = config.scraping;
         let client = reqwest::Client::builder()
-            .user_agent(&config.scraping.user_agent)
-            .timeout(std::time::Duration::from_secs(config.scraping.timeout_seconds))
+            .user_agent(&scraping_config.user_agent)
+            .timeout(std::time::Duration::from_secs(scraping_config.timeout_seconds))
             .build()
             .unwrap();
 
+        let rate_limit_ms = scraping_config.rate_limit_ms;
+
         Self {
-            config: config.scraping,
+            config: scraping_config,
             pipeline,
-            rate_limiter: Arc::new(Mutex::new(RateLimiter::new(
-                config.scraping.rate_limit_ms,
-            ))),
+            rate_limiter: Arc::new(Mutex::new(RateLimiter::new(rate_limit_ms))),
             client,
             cache,
         }

@@ -1,8 +1,11 @@
+# Rust Scraper Pro Configuration
+# Edition: 2024 | Real-world data sources
+
 [scraping]
-rate_limit_ms = 1000
+rate_limit_ms = 2000  # Polite scraping: 2 seconds between requests
 timeout_seconds = 30
 max_retries = 3
-user_agent = "RustScraperPro/1.0"
+user_agent = "Mozilla/5.0 (compatible; RustScraperPro/1.0; Educational)"
 follow_robots_txt = true
 
 [api]
@@ -12,8 +15,7 @@ cors_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 [database]
 type = "sqlite"
-path = "scraped_data.db"
-# connection_string = "postgres://user:pass@localhost/scraped_data"  # for postgres
+path = "output/scraped_data.db"
 
 [cache]
 memory_max_items = 1000
@@ -21,9 +23,56 @@ memory_ttl_seconds = 3600
 file_cache_dir = "cache/html"
 enable_file_cache = true
 
+# ========================================
+# NEWS SOURCES (Real, Public Data)
+# ========================================
+
 [[sources]]
-name = "Hacker News"
-url = "https://news.ycombinator.com"
+name = "BBC News"
+url = "https://www.bbc.com/news"
+type = "news"
+rate_limit_ms = 3000
+
+[sources.selectors]
+container = "article"
+title = "h2"
+content = "p"
+author = ".author"
+
+[[sources]]
+name = "Reuters World"
+url = "https://www.reuters.com/world/"
+type = "news"
+rate_limit_ms = 3000
+
+[sources.selectors]
+container = "article"
+title = "h3"
+content = "p"
+
+# ========================================
+# E-COMMERCE SOURCES (Books to Scrape)
+# ========================================
+
+[[sources]]
+name = "Books to Scrape"
+url = "https://books.toscrape.com/catalogue/category/books_1/index.html"
+type = "ecommerce"
+rate_limit_ms = 2000
+
+[sources.selectors]
+container = ".product_pod"
+title = "h3 a"
+price = ".price_color"
+image = "img"
+
+# ========================================
+# SOCIAL / API SOURCES
+# ========================================
+
+[[sources]]
+name = "Hacker News Top Stories"
+url = "https://news.ycombinator.com/"
 type = "news"
 rate_limit_ms = 2000
 
@@ -32,21 +81,3 @@ container = ".athing"
 title = ".titleline > a"
 content = ".subtext"
 author = ".hnuser"
-
-[[sources]]
-name = "Example E-commerce"
-url = "https://httpbin.org/html"
-type = "ecommerce"
-rate_limit_ms = 1000
-
-[[sources]]
-name = "Twitter"
-url = "https://twitter.com"
-type = "social"
-rate_limit_ms = 5000
-
-[[sources]]
-name = "Reddit"
-url = "https://reddit.com"
-type = "social"
-rate_limit_ms = 3000

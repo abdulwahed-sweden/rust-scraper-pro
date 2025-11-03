@@ -1,14 +1,58 @@
+# Real-World Scraping Sources Configuration
+# All sources are publicly accessible and appropriate for educational use
+
+# ========================================
+# NEWS SOURCES
+# ========================================
+
 [[news]]
-name = "Tech News Portal"
-url = "https://example-tech-news.com"
+name = "BBC News Technology"
+url = "https://www.bbc.com/news/technology"
 selectors = { container = "article", title = "h2", content = "p", author = ".author" }
+rate_limit_ms = 3000
+enabled = true
+
+[[news]]
+name = "Hacker News"
+url = "https://news.ycombinator.com/"
+selectors = { container = ".athing", title = ".titleline > a", content = ".subtext", author = ".hnuser" }
+rate_limit_ms = 2000
+enabled = true
+
+# ========================================
+# E-COMMERCE SOURCES
+# ========================================
 
 [[ecommerce]]
-name = "Online Store"
-url = "https://example-shop.com"
-selectors = { container = ".product", title = ".title", price = ".price", image = "img" }
+name = "Books to Scrape - Fiction"
+url = "https://books.toscrape.com/catalogue/category/books/fiction_10/index.html"
+selectors = { container = ".product_pod", title = "h3 a", price = ".price_color", image = "img" }
+rate_limit_ms = 2000
+enabled = true
 
-[[social]]
-name = "Social Platform"
-url = "https://example-social.com"
-selectors = { container = ".post", content = ".content", author = ".username" }
+[[ecommerce]]
+name = "Books to Scrape - Travel"
+url = "https://books.toscrape.com/catalogue/category/books/travel_2/index.html"
+selectors = { container = ".product_pod", title = "h3 a", price = ".price_color", image = "img" }
+rate_limit_ms = 2000
+enabled = true
+
+# ========================================
+# JSON API SOURCES
+# ========================================
+
+[[api]]
+name = "Reddit World News"
+url = "https://www.reddit.com/r/worldnews.json"
+type = "json"
+rate_limit_ms = 3000
+enabled = true
+# Uses Reddit's public JSON API - no auth required
+
+[[api]]
+name = "Hacker News API"
+url = "https://hacker-news.firebaseio.com/v0/topstories.json"
+type = "json"
+rate_limit_ms = 1000
+enabled = true
+# Public Firebase API - returns story IDs

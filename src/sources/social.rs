@@ -2,13 +2,18 @@ use crate::{
     core::models::ScrapedData,
     core::scraper::ScraperEngine,
     sources::source::{SocialSource, Source},
-    utils::error::ScraperError,
 };
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use regex::Regex;
 use lazy_static::lazy_static;
 use serde::Deserialize;
+
+lazy_static! {
+    static ref MENTION_REGEX: Regex = Regex::new(r"@(\w+)").unwrap();
+    static ref HASHTAG_REGEX: Regex = Regex::new(r"#(\w+)").unwrap();
+    static ref URL_REGEX: Regex = Regex::new(r"https?://[^\s]+").unwrap();
+}
 
 #[derive(Debug, Deserialize)]
 pub struct SocialMediaConfig {
@@ -60,17 +65,11 @@ impl Source for SocialSource {
         let document = ScraperEngine::parse_html(html);
         let mut results = Vec::new();
 
-        lazy_static! {
-            static ref MENTION_REGEX: Regex = Regex::new(r"@(\w+)").unwrap();
-            static ref HASHTAG_REGEX: Regex = Regex::new(r"#(\w+)").unwrap();
-            static ref URL_REGEX: Regex = Regex::new(r"https?://[^\s]+").unwrap();
-        }
-
         // Different scraping logic based on platform
         match self.name.as_str() {
-            "Twitter" => self.scrape_twitter(&document, &mut results).await?,
-            "Reddit" => self.scrape_reddit(&document, &mut results).await?,
-            _ => self.scrape_generic_social(&document, &mut results).await?,
+            "Twitter" => self.scrape_twitter(&document, &mut results)?,
+            "Reddit" => self.scrape_reddit(&document, &mut results)?,
+            _ => self.scrape_generic_social(&document, &mut results)?,
         }
 
         log::info!("Scraped {} social posts from {}", results.len(), self.name());
@@ -79,7 +78,7 @@ impl Source for SocialSource {
 }
 
 impl SocialSource {
-    async fn scrape_twitter(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
+    fn scrape_twitter(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
         // Twitter-specific scraping logic
         let tweet_selector = "[data-testid=\"tweet\"]";
         let content_selector = "[data-testid=\"tweetText\"]";
@@ -134,7 +133,7 @@ impl SocialSource {
         Ok(())
     }
 
-    async fn scrape_reddit(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
+    fn scrape_reddit(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
         // Reddit-specific scraping logic
         let post_selector = "[data-testid=\"post-container\"]";
         let title_selector = "h3";
@@ -184,7 +183,7 @@ impl SocialSource {
         Ok(())
     }
 
-    async fn scrape_generic_social(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
+    fn scrape_generic_social(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
         // Generic social media scraping
         let post_selector = "article, .post, .card, .feed-item";
         let content_selector = ".content, .text, .body";

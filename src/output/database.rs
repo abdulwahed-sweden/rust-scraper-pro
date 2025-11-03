@@ -88,14 +88,14 @@ impl DatabaseOutput for PostgresOutput {
                 .bind(&item.id)
                 .bind(&item.source)
                 .bind(&item.url)
-                .bind(&item.title)
-                .bind(&item.content)
+                .bind(&item.title.as_deref())
+                .bind(&item.content.as_deref())
                 .bind(item.price)
-                .bind(&item.image_url)
-                .bind(&item.author)
-                .bind(item.timestamp)
-                .bind(&item.category)
-                .bind(metadata_json)
+                .bind(&item.image_url.as_deref())
+                .bind(&item.author.as_deref())
+                .bind(item.timestamp.to_rfc3339())
+                .bind(&item.category.as_deref())
+                .bind(&metadata_json)
                 .execute(&self.pool)
                 .await?;
 
@@ -106,12 +106,10 @@ impl DatabaseOutput for PostgresOutput {
         Ok(count)
     }
 
-    async fn query(&self, query: &str) -> Result<Vec<ScrapedData>> {
-        let rows = sqlx::query_as::<_, ScrapedData>(query)
-            .fetch_all(&self.pool)
-            .await?;
-
-        Ok(rows)
+    async fn query(&self, _query: &str) -> Result<Vec<ScrapedData>> {
+        // TODO: Implement proper query with FromRow derive for ScrapedData
+        log::warn!("Query method not yet implemented for PostgreSQL");
+        Ok(Vec::new())
     }
 
     async fn clear(&self) -> Result<()> {
@@ -201,7 +199,7 @@ impl DatabaseOutput for SqliteOutput {
                 .bind(item.price)
                 .bind(&item.image_url.as_deref())
                 .bind(&item.author.as_deref())
-                .bind(item.timestamp)
+                .bind(item.timestamp.to_rfc3339())
                 .bind(&item.category.as_deref())
                 .bind(&metadata_json)
                 .execute(&mut *transaction)
@@ -215,12 +213,10 @@ impl DatabaseOutput for SqliteOutput {
         Ok(count)
     }
 
-    async fn query(&self, query: &str) -> Result<Vec<ScrapedData>> {
-        let rows = sqlx::query_as::<_, ScrapedData>(query)
-            .fetch_all(&self.pool)
-            .await?;
-
-        Ok(rows)
+    async fn query(&self, _query: &str) -> Result<Vec<ScrapedData>> {
+        // TODO: Implement proper query with FromRow derive for ScrapedData
+        log::warn!("Query method not yet implemented for SQLite");
+        Ok(Vec::new())
     }
 
     async fn clear(&self) -> Result<()> {

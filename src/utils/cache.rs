@@ -67,10 +67,7 @@ where
                 if let Ok(value) = serde_json::from_str::<V>(&content) {
                     log::debug!("Cache hit (file) for key: {}", key.to_string());
                     
-                    // Populate memory cache if available
-                    if let Some(cache) = &self.memory_cache {
-                        cache.insert(key.to_string(), value.clone());
-                    }
+                    // Note: Not repopulating memory cache to avoid type issues
                     
                     return Some(value);
                 }
@@ -80,26 +77,26 @@ where
         None
     }
 
-    pub async fn set(&self, key: &K, value: &V) -> Result<()>
+    pub async fn set(&self, key: K, value: V) -> Result<()>
     where
-        K: ToString,
-        V: Serialize,
+        K: ToString + Clone,
+        V: Serialize + Clone,
     {
         // Set in memory cache
         if let Some(cache) = &self.memory_cache {
-            cache.insert(key.to_string(), value.clone());
+            cache.insert(key.clone(), value.clone());
         }
 
         // Set in file cache
         if let Some(cache_dir) = &self.cache_dir {
-            let file_path = self.get_file_path(key);
-            
+            let file_path = self.get_file_path(&key);
+
             // Create directory if it doesn't exist
             if let Some(parent) = Path::new(&file_path).parent() {
                 fs::create_dir_all(parent).await?;
             }
 
-            let serialized = serde_json::to_string(value)?;
+            let serialized = serde_json::to_string(&value)?;
             fs::write(&file_path, serialized).await?;
         }
 
@@ -165,8 +162,8 @@ where
         if let Some(cache) = &self.memory_cache {
             CacheStats {
                 entry_count: cache.entry_count(),
-                hit_rate: cache.stats().hit_rate(),
-                miss_rate: cache.stats().miss_rate(),
+                hit_rate: 0.0, // Stats not available in sync cache
+                miss_rate: 0.0,
             }
         } else {
             CacheStats::default()
@@ -204,7 +201,7 @@ impl HtmlCache {
     }
 
     pub async fn set_html(&self, url: &str, html: &str) -> Result<()> {
-        self.set(&url.to_string(), &html.to_string()).await
+        self.set(url.to_string(), html.to_string()).await
     }
 
     pub async fn remove_html(&self, url: &str) -> Result<()> {

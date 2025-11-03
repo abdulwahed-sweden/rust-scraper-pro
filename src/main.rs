@@ -1,19 +1,20 @@
 use anyhow::Result;
 use rust_scraper_pro::{
-    config::Config,
+    core::config::Config,
     core::scraper::ScraperEngine,
     output::{
         api::{ApiServer, SharedData},
         csv::CsvOutput,
-        database::SqliteOutput,
+        database::{DatabaseOutput, SqliteOutput},
         json::JsonOutput,
     },
     processors::pipeline::ProcessingPipeline,
     sources::{
-        ecommerce::EcommerceSource,
-        news::NewsSource,
-        social::SocialSource,
-        source::{Source, SourceType},
+        EcommerceSource,
+        NewsSource,
+        SocialSource,
+        Source,
+        SourceType,
     },
     utils::{
         cache::HtmlCache,
@@ -41,9 +42,9 @@ async fn main() -> Result<()> {
     // Initialize scraper engine with cache
     let mut engine = ScraperEngine::new(config, pipeline, Some(cache.clone()));
     
-    // Initialize database output
-    let db_output = SqliteOutput::new("sqlite:scraped_data.db", None).await?;
-    db_output.init().await?;
+    // Initialize database output (temporarily disabled for testing)
+    // let db_output = SqliteOutput::new("sqlite://scraped_data.db", None).await?;
+    // db_output.init().await?;
     
     // Initialize API server
     let api_data: SharedData = Arc::new(tokio::sync::RwLock::new(Vec::new()));
@@ -95,8 +96,8 @@ async fn main() -> Result<()> {
     let csv_output = CsvOutput::new();
     csv_output.export(&processed_data, "output/data.csv").await?;
     
-    // Database export
-    db_output.save(&processed_data).await?;
+    // Database export (temporarily disabled)
+    // db_output.save(&processed_data).await?;
     
     // Update API data
     {

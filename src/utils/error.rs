@@ -41,6 +41,9 @@ impl From<toml::de::Error> for ScraperError {
 
 impl From<csv::Error> for ScraperError {
     fn from(err: csv::Error) -> Self {
-        ScraperError::SerializationError(err.to_string())
+        ScraperError::ProcessingError(err.to_string())
     }
 }
+
+// Type alias for Results using ScraperError
+pub type Result<T> = std::result::Result<T, ScraperError>;

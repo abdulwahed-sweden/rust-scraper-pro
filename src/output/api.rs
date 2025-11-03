@@ -49,9 +49,8 @@ impl ApiServer {
 
         log::info!("Starting API server on http://{}", addr);
 
-        axum::Server::bind(&addr)
-            .serve(app.into_make_service())
-            .await?;
+        let listener = tokio::net::TcpListener::bind(addr).await?;
+        axum::serve(listener, app).await?;
 
         Ok(())
     }
@@ -249,14 +248,15 @@ async fn export_csv(State(data): State<SharedData>) -> (StatusCode, String) {
 async fn update_data(
     State(data): State<SharedData>,
     Json(new_data): Json<Vec<ScrapedData>>,
-) -> (StatusCode, Json<HashMap<&'static str, &'static str>>) {
+) -> (StatusCode, Json<HashMap<&'static str, String>>) {
     let mut data_guard = data.write().await;
+    let count = new_data.len();
     *data_guard = new_data;
-    
+
     let mut response = HashMap::new();
-    response.insert("status", "success");
-    response.insert("message", "Data updated successfully");
-    response.insert("items_count", &format!("{}", data_guard.len()));
-    
+    response.insert("status", "success".to_string());
+    response.insert("message", "Data updated successfully".to_string());
+    response.insert("items_count", count.to_string());
+
     (StatusCode::OK, Json(response))
 }
