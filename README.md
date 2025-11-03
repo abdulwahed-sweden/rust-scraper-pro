@@ -157,6 +157,13 @@ rust-scraper-pro/
 └── tests/              # Unit & integration tests
 ```
 
+## Vision & Philosophy
+
+Rust Scraper Pro is more than a technical tool—it's the foundation for an intelligent data platform that combines speed, ethics, and extensibility. Learn about the project's vision and future potential:
+
+- [English: Vision and Future Potential](docs/VISION_AND_POTENTIAL.md)
+- [العربية: الرؤية والإمكانات المستقبلية](docs/VISION_AND_POTENTIAL_AR.md)
+
 ## Contributing
 
 1. Fork the repository
