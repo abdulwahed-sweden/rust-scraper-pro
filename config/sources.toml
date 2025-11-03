@@ -1,0 +1,14 @@
+[[news]]
+name = "Tech News Portal"
+url = "https://example-tech-news.com"
+selectors = { container = "article", title = "h2", content = "p", author = ".author" }
+
+[[ecommerce]]
+name = "Online Store"
+url = "https://example-shop.com"
+selectors = { container = ".product", title = ".title", price = ".price", image = "img" }
+
+[[social]]
+name = "Social Platform"
+url = "https://example-social.com"
+selectors = { container = ".post", content = ".content", author = ".username" }
