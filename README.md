@@ -1,5 +1,7 @@
 # Rust Scraper Pro 🚀
 
+![Rust Edition](https://img.shields.io/badge/Rust-Edition%202024-orange) ![License](https://img.shields.io/badge/License-MIT-blue) ![Build](https://img.shields.io/badge/Build-passing-brightgreen)
+
 A professional, high-performance web scraping library built in Rust. Designed for reliability, speed, and extensibility.
 
 ## Features
@@ -53,19 +55,30 @@ async fn main() -> Result<()> {
 }
 ```
 
-## Examples
+## 📘 Examples
 
-Check the `examples/` directory for comprehensive examples:
+The project includes **realistic, production-ready examples** using **real public data sources**:
 
-- `multi_source_scraper.rs` - Scrape from multiple sources
-- `ecommerce_scraper.rs` - E-commerce product scraping  
-- `news_crawler.rs` - News article scraping and analysis
-- `advanced_pipeline.rs` - Continuous scraping with API
+- **`news_scraper.rs`** - Scrape Hacker News articles
+- **`ecommerce_scraper.rs`** - Extract book catalog from Books to Scrape
+- **`social_scraper.rs`** - Fetch Reddit posts via JSON API
+- **`multi_source_pipeline.rs`** - Complete multi-source workflow
 
-Run examples with:
+All examples demonstrate:
+- ✅ Polite scraping with rate limiting
+- ✅ Real data extraction (not mocked)
+- ✅ Multiple export formats (JSON, CSV)
+- ✅ Professional error handling
+
+### Run examples:
 ```bash
-cargo run --example multi_source_scraper
+cargo run --example news_scraper
+cargo run --example ecommerce_scraper
+cargo run --example social_scraper
+cargo run --example multi_source_pipeline
 ```
+
+📖 **[View detailed examples guide →](docs/EXAMPLES.md)**
 
 ## Configuration
 
@@ -129,10 +142,10 @@ rust-scraper-pro/
 │   ├── settings.toml
 │   └── sources.toml
 ├── examples/
-│   ├── multi_source_scraper.rs
+│   ├── news_scraper.rs
 │   ├── ecommerce_scraper.rs
-│   ├── news_crawler.rs
-│   └── advanced_pipeline.rs
+│   ├── social_scraper.rs
+│   └── multi_source_pipeline.rs
 ├── src/
 │   ├── main.rs
 │   ├── lib.rs
