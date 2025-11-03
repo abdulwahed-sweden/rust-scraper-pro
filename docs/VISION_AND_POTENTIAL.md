@@ -131,7 +131,7 @@ This project and its technical vision were developed by
 This work exemplifies how open-source technologies can transform into sophisticated knowledge tools serving science and society.
 
 > 🧭 *"Data is not just numbers, but keys to understanding."*
-> — Abdul Wahid Mansour
+> — Abdulwahed Mansour
 
 ---
 
