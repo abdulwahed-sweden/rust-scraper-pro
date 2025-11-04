@@ -2,16 +2,20 @@ use crate::core::models::ScrapedData;
 use anyhow::Result;
 use axum::{
     extract::{Query, State},
-    http::StatusCode,
-    response::Json,
+    http::{StatusCode, Method, Uri},
+    response::{Json, IntoResponse, Html},
     routing::{get, post},
     Router,
 };
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::net::SocketAddr;
+use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::RwLock;
+use tower_http::cors::{CorsLayer, Any};
+use tower_http::services::ServeDir;
+use tower_http::trace::TraceLayer;
 
 pub type SharedData = Arc<RwLock<Vec<ScrapedData>>>;
 
@@ -47,7 +51,9 @@ impl ApiServer {
         let app = self.create_app();
         let addr = SocketAddr::from(([127, 0, 0, 1], self.port));
 
-        log::info!("Starting API server on http://{}", addr);
+        log::info!("Starting full-stack server on http://{}", addr);
+        log::info!("API endpoints available at http://{}/api/*", addr);
+        log::info!("Frontend available at http://{}", addr);
 
         let listener = tokio::net::TcpListener::bind(addr).await?;
         axum::serve(listener, app).await?;
@@ -56,7 +62,15 @@ impl ApiServer {
     }
 
     fn create_app(&self) -> Router {
-        Router::new()
+        // Configure CORS for development (allow React dev server on 5173)
+        let cors = CorsLayer::new()
+            .allow_origin(Any)
+            .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE, Method::OPTIONS])
+            .allow_headers(Any)
+            .allow_credentials(false);
+
+        // Create API routes
+        let api_routes = Router::new()
             .route("/api/data", get(get_data))
             .route("/api/search", get(search_data))
             .route("/api/sources", get(get_sources))
@@ -66,6 +80,25 @@ impl ApiServer {
             .route("/api/export/csv", get(export_csv))
             .route("/api/update", post(update_data))
             .with_state(self.data.clone())
+            .layer(cors)
+            .layer(TraceLayer::new_for_http());
+
+        // Check if frontend dist folder exists
+        let frontend_path = PathBuf::from("frontend/dist");
+
+        if frontend_path.exists() && frontend_path.is_dir() {
+            log::info!("Serving static files from frontend/dist");
+
+            // Serve static files with fallback to index.html for SPA routing
+            // We need to handle this manually to get proper 200 status codes for SPA routes
+            Router::new()
+                .merge(api_routes)
+                .fallback(handle_frontend)
+        } else {
+            log::warn!("Frontend dist folder not found at {:?}. Only serving API endpoints.", frontend_path);
+            log::warn!("Run 'make build-frontend' or 'cd frontend && npm install && npm run build' to build the frontend.");
+            api_routes
+        }
     }
 
     pub async fn update_data(&self, new_data: Vec<ScrapedData>) -> Result<()> {
@@ -259,4 +292,83 @@ async fn update_data(
     response.insert("items_count", count.to_string());
 
     (StatusCode::OK, Json(response))
+}
+
+// Frontend handler - serves static files or index.html for SPA routing
+async fn handle_frontend(uri: Uri) -> impl IntoResponse {
+    let path = uri.path();
+
+    // API routes should never reach here (they're handled by api_routes)
+    if path.starts_with("/api/") {
+        return (StatusCode::NOT_FOUND, "API endpoint not found").into_response();
+    }
+
+    // Try to serve the file from frontend/dist
+    let file_path = format!("frontend/dist{}", path);
+    let file_path = std::path::Path::new(&file_path);
+
+    // If path is "/" or empty, serve index.html
+    if path == "/" || path.is_empty() {
+        return serve_index_html().await;
+    }
+
+    // Check if the file exists and is a file (not a directory)
+    if file_path.exists() && file_path.is_file() {
+        // Serve the file
+        match tokio::fs::read(file_path).await {
+            Ok(content) => {
+                // Determine content type from file extension
+                let content_type = get_content_type(path);
+                return (
+                    StatusCode::OK,
+                    [(axum::http::header::CONTENT_TYPE, content_type)],
+                    content
+                ).into_response();
+            }
+            Err(_) => return serve_index_html().await,
+        }
+    }
+
+    // For all other routes (non-existent files), serve index.html for SPA routing
+    serve_index_html().await
+}
+
+// Helper to serve index.html
+async fn serve_index_html() -> axum::response::Response {
+    match tokio::fs::read_to_string("frontend/dist/index.html").await {
+        Ok(content) => (
+            StatusCode::OK,
+            [(axum::http::header::CONTENT_TYPE, "text/html; charset=utf-8")],
+            content
+        ).into_response(),
+        Err(_) => (
+            StatusCode::NOT_FOUND,
+            "Frontend not found. Build the frontend first."
+        ).into_response(),
+    }
+}
+
+// Helper to determine content type from file extension
+fn get_content_type(path: &str) -> &'static str {
+    if path.ends_with(".js") {
+        "text/javascript"
+    } else if path.ends_with(".css") {
+        "text/css"
+    } else if path.ends_with(".html") {
+        "text/html; charset=utf-8"
+    } else if path.ends_with(".json") {
+        "application/json"
+    } else if path.ends_with(".png") {
+        "image/png"
+    } else if path.ends_with(".jpg") || path.ends_with(".jpeg") {
+        "image/jpeg"
+    } else if path.ends_with(".svg") {
+        "image/svg+xml"
+    } else if path.ends_with(".woff") {
+        "font/woff"
+    } else if path.ends_with(".woff2") {
+        "font/woff2"
+    } else {
+        "application/octet-stream"
+    }
 }

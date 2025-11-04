@@ -22,5 +22,20 @@ target
 
 
 # Added by cargo
-
 /target
+
+# Environment variables
+.env
+
+# Frontend
+frontend/dist
+frontend/node_modules
+
+# Output files
+output/
+*.db
+*.csv
+*.json
+
+# macOS
+.DS_Store

@@ -26,6 +26,9 @@ use tokio::time::{sleep, Duration};
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Load environment variables from .env file if it exists
+    dotenvy::dotenv().ok();
+
     setup_logger()?;
     
     log::info!("Starting Rust Scraper Pro");
@@ -46,9 +49,14 @@ async fn main() -> Result<()> {
     // let db_output = SqliteOutput::new("sqlite://scraped_data.db", None).await?;
     // db_output.init().await?;
     
-    // Initialize API server
+    // Initialize API server with port from environment or default to 3000
+    let port = std::env::var("SERVER_PORT")
+        .ok()
+        .and_then(|p| p.parse::<u16>().ok())
+        .unwrap_or(3000);
+
     let api_data: SharedData = Arc::new(tokio::sync::RwLock::new(Vec::new()));
-    let api_server = ApiServer::new(api_data.clone(), Some(3000));
+    let api_server = ApiServer::new(api_data.clone(), Some(port));
     
     // Start API server in background
     tokio::spawn(async move {
@@ -108,12 +116,12 @@ async fn main() -> Result<()> {
     // Display cache statistics
     let cache_stats = cache.stats();
     log::info!("Cache statistics: {:?}", cache_stats);
-    
-    log::info!("Scraping completed! Data available via API at http://localhost:3000");
+
+    log::info!("Scraping completed! Data available via API at http://localhost:{}", port);
     log::info!("Press Ctrl+C to exit...");
-    
+
     // Keep the application running
     tokio::signal::ctrl_c().await?;
-    
+
     Ok(())
 }

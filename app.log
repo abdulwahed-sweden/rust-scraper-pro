@@ -1,0 +1,30 @@
+[2025-11-04T22:58:45Z INFO ] Starting Rust Scraper Pro
+[2025-11-04T22:58:45Z INFO ] Scraping from: News Source
+[2025-11-04T22:58:45Z INFO ] Starting to scrape from: News Source
+[2025-11-04T22:58:45Z INFO ] Serving static files from frontend/dist
+[2025-11-04T22:58:45Z INFO ] Starting full-stack server on http://127.0.0.1:3000
+[2025-11-04T22:58:45Z INFO ] API endpoints available at http://127.0.0.1:3000/api/*
+[2025-11-04T22:58:45Z INFO ] Frontend available at http://127.0.0.1:3000
+[2025-11-04T22:58:46Z INFO ] Scraped 0 news articles from News Source
+[2025-11-04T22:58:46Z INFO ] Successfully scraped 0 items
+[2025-11-04T22:58:48Z INFO ] Scraping from: Ecommerce Source
+[2025-11-04T22:58:48Z INFO ] Starting to scrape from: Ecommerce Source
+[2025-11-04T22:59:18Z ERROR] Failed to scrape: HTTP request error: error sending request for url (https://httpbin.org/html)
+[2025-11-04T22:59:18Z INFO ] Scraping from: Twitter
+[2025-11-04T22:59:18Z INFO ] Starting to scrape from: Twitter
+[2025-11-04T22:59:18Z INFO ] Scraped 0 social posts from Twitter
+[2025-11-04T22:59:18Z INFO ] Successfully scraped 0 items
+[2025-11-04T22:59:20Z INFO ] Scraping from: Reddit Frontpage
+[2025-11-04T22:59:20Z INFO ] Starting to scrape from: Reddit Frontpage
+[2025-11-04T22:59:21Z INFO ] Scraped 3 social posts from Reddit Frontpage
+[2025-11-04T22:59:21Z INFO ] Successfully scraped 3 items
+[2025-11-04T22:59:23Z INFO ] Processing 3 items through pipeline
+[2025-11-04T22:59:23Z INFO ] Validation completed: 3 valid items
+[2025-11-04T22:59:23Z INFO ] Deduplication completed: 1 unique items
+[2025-11-04T22:59:23Z INFO ] Pipeline processing completed: 1 items remaining
+[2025-11-04T22:59:23Z INFO ] Exporting 1 processed items
+[2025-11-04T22:59:23Z INFO ] Exported 1 items to JSON
+[2025-11-04T22:59:23Z INFO ] Exported 1 items to CSV
+[2025-11-04T22:59:23Z INFO ] Cache statistics: CacheStats { entry_count: 2, hit_rate: 0.0, miss_rate: 0.0 }
+[2025-11-04T22:59:23Z INFO ] Scraping completed! Data available via API at http://localhost:3000
+[2025-11-04T22:59:23Z INFO ] Press Ctrl+C to exit...

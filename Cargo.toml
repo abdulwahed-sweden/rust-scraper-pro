@@ -30,7 +30,10 @@ chrono = { version = "0.4.42", features = ["serde"] }
 uuid = { version = "1.18.1", features = ["v4"] }
 axum = "0.8.6"
 tower = "0.5.2"
-tower-http = { version = "0.6.6", features = ["cors"] }
+tower-http = { version = "0.6.6", features = ["cors", "fs", "trace"] }
+dotenvy = "0.15"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 hyper = "1.7.0"
 rustls = "0.23.34"
 serde_urlencoded = "0.7.1"
