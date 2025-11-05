@@ -16,7 +16,7 @@ serde_json = "1.0.145"
 serde_yaml = "0.9.34-deprecated"
 toml = "0.9.8"
 csv = "1.4.0"
-sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "postgres", "sqlite"] }
+sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "postgres", "sqlite", "chrono"] }
 anyhow = "1.0.100"
 thiserror = "2.0.17"
 log = "0.4.28"

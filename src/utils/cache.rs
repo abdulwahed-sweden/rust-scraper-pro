@@ -61,7 +61,7 @@ where
         }
 
         // Try file cache
-        if let Some(cache_dir) = &self.cache_dir {
+        if let Some(_cache_dir) = &self.cache_dir {
             let file_path = self.get_file_path(key);
             if let Ok(content) = fs::read_to_string(&file_path).await {
                 if let Ok(value) = serde_json::from_str::<V>(&content) {
@@ -88,7 +88,7 @@ where
         }
 
         // Set in file cache
-        if let Some(cache_dir) = &self.cache_dir {
+        if let Some(_cache_dir) = &self.cache_dir {
             let file_path = self.get_file_path(&key);
 
             // Create directory if it doesn't exist
@@ -114,7 +114,7 @@ where
         }
 
         // Remove from file cache
-        if let Some(cache_dir) = &self.cache_dir {
+        if let Some(_cache_dir) = &self.cache_dir {
             let file_path = self.get_file_path(key);
             if Path::new(&file_path).exists() {
                 fs::remove_file(&file_path).await?;

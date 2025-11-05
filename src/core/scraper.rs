@@ -10,7 +10,7 @@ use std::sync::Arc;
 use tokio::sync::Mutex;
 
 pub struct ScraperEngine {
-    config: ScrapingConfig,
+    _config: ScrapingConfig,
     pipeline: ProcessingPipeline,
     rate_limiter: Arc<Mutex<RateLimiter>>,
     client: reqwest::Client,
@@ -33,7 +33,7 @@ impl ScraperEngine {
         let rate_limit_ms = scraping_config.rate_limit_ms;
 
         Self {
-            config: scraping_config,
+            _config: scraping_config,
             pipeline,
             rate_limiter: Arc::new(Mutex::new(RateLimiter::new(rate_limit_ms))),
             client,

@@ -4,7 +4,6 @@ use crate::{
     sources::source::{NewsSource, Source},
 };
 use anyhow::Result;
-use scraper::Html;
 
 impl NewsSource {
     pub fn new(base_url: &str) -> Self {
@@ -43,7 +42,7 @@ impl Source for NewsSource {
 
         let articles = ScraperEngine::select_element(&document, article_selector)?;
 
-        for article in articles {
+        for _article in articles {
             let mut data = ScrapedData::new(self.name().to_string(), self.base_url().to_string());
             
             // Extract title

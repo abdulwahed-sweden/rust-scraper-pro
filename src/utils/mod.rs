@@ -2,6 +2,7 @@ pub mod cache;
 pub mod error;
 pub mod logger;
 pub mod rate_limiter;
+pub mod time;
 
 pub use cache::HtmlCache;
 pub use error::ScraperError;

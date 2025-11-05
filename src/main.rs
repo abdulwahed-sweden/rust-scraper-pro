@@ -5,14 +5,12 @@ use rust_scraper_pro::{
     output::{
         api::{ApiServer, SharedData},
         csv::CsvOutput,
-        database::{DatabaseOutput, SqliteOutput},
+        database::{DatabaseOutput, PostgresOutput},
         json::JsonOutput,
     },
     processors::pipeline::ProcessingPipeline,
     sources::{
         EcommerceSource,
-        NewsSource,
-        SocialSource,
         Source,
         SourceType,
     },
@@ -24,11 +22,12 @@ use rust_scraper_pro::{
 use std::sync::Arc;
 use tokio::time::{sleep, Duration};
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread")]
 async fn main() -> Result<()> {
     // Load environment variables from .env file if it exists
     dotenvy::dotenv().ok();
 
+    // Initialize logger and tracing
     setup_logger()?;
     
     log::info!("Starting Rust Scraper Pro");
@@ -38,17 +37,39 @@ async fn main() -> Result<()> {
     
     // Initialize cache
     let cache = Arc::new(HtmlCache::new_html_cache(1000, 3600));
-    
+
     // Create processing pipeline
     let pipeline = ProcessingPipeline::new();
-    
+
     // Initialize scraper engine with cache
     let mut engine = ScraperEngine::new(config, pipeline, Some(cache.clone()));
-    
-    // Initialize database output (temporarily disabled for testing)
-    // let db_output = SqliteOutput::new("sqlite://scraped_data.db", None).await?;
-    // db_output.init().await?;
-    
+
+    // Initialize PostgreSQL database (with graceful fallback)
+    let database_url = std::env::var("DATABASE_URL")
+        .unwrap_or_else(|_| "postgres://postgres:postgres@localhost/rust_scraper_db".to_string());
+
+    let db_output = match PostgresOutput::new(&database_url, None).await {
+        Ok(db) => {
+            log::info!("Connected to PostgreSQL database");
+            match db.init().await {
+                Ok(_) => {
+                    log::info!("Database schema initialized successfully");
+                    Some(db)
+                }
+                Err(e) => {
+                    log::warn!("Failed to initialize database schema: {}", e);
+                    log::warn!("Continuing without database persistence");
+                    None
+                }
+            }
+        }
+        Err(e) => {
+            log::warn!("Failed to connect to PostgreSQL: {}", e);
+            log::warn!("Continuing without database persistence. Data will only be stored in-memory.");
+            None
+        }
+    };
+
     // Initialize API server with port from environment or default to 3000
     let port = std::env::var("SERVER_PORT")
         .ok()
@@ -56,7 +77,8 @@ async fn main() -> Result<()> {
         .unwrap_or(3000);
 
     let api_data: SharedData = Arc::new(tokio::sync::RwLock::new(Vec::new()));
-    let api_server = ApiServer::new(api_data.clone(), Some(port));
+    let db_arc = db_output.map(Arc::new);
+    let api_server = ApiServer::new(api_data.clone(), db_arc.clone(), Some(port));
     
     // Start API server in background
     tokio::spawn(async move {
@@ -65,12 +87,17 @@ async fn main() -> Result<()> {
         }
     });
     
-    // Scrape from multiple sources
+    // Scrape from legal public test sources
+    // books.toscrape.com is specifically designed for scraping practice
     let sources = vec![
-        SourceType::News(NewsSource::new("https://news.ycombinator.com")),
-        SourceType::Ecommerce(EcommerceSource::new("https://httpbin.org/html")),
-        SourceType::Social(SocialSource::twitter()),
-        SourceType::Social(SocialSource::reddit().with_name("Reddit Frontpage")),
+        SourceType::Ecommerce(
+            EcommerceSource::new("https://books.toscrape.com")
+                .with_name("Books to Scrape")
+        ),
+        SourceType::Ecommerce(
+            EcommerceSource::new("https://books.toscrape.com/catalogue/category/books/science_22/index.html")
+                .with_name("Science Books")
+        ),
     ];
     
     let mut all_scraped_data = Vec::new();
@@ -95,19 +122,25 @@ async fn main() -> Result<()> {
     
     // Export to various formats
     log::info!("Exporting {} processed items", processed_data.len());
-    
+
     // JSON export
     let json_output = JsonOutput::new();
     json_output.export(&processed_data, "output/data.json").await?;
-    
+
     // CSV export
     let csv_output = CsvOutput::new();
     csv_output.export(&processed_data, "output/data.csv").await?;
-    
-    // Database export (temporarily disabled)
-    // db_output.save(&processed_data).await?;
-    
-    // Update API data
+
+    // Save to database if available
+    if let Some(db) = &db_arc {
+        use rust_scraper_pro::output::database::DatabaseOutput;
+        match db.save(&processed_data).await {
+            Ok(count) => log::info!("Saved {} items to PostgreSQL database", count),
+            Err(e) => log::error!("Failed to save to database: {}", e),
+        }
+    }
+
+    // Update API in-memory data
     {
         let mut api_data_guard = api_data.write().await;
         *api_data_guard = processed_data.clone();

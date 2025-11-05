@@ -14,8 +14,16 @@ host = "127.0.0.1"
 cors_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 [database]
-type = "sqlite"
-path = "output/scraped_data.db"
+# Type: "postgres" or "sqlite"
+type = "postgres"
+# PostgreSQL connection string (use this for production)
+url = "postgres://postgres:postgres@localhost/rust_scraper_db"
+# SQLite path (alternative for development)
+sqlite_path = "output/scraped_data.db"
+# Table name for scraped data
+table_name = "scraped_data"
+# Enable database persistence
+enabled = true
 
 [cache]
 memory_max_items = 1000

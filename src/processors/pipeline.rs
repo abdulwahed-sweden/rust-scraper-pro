@@ -1,7 +1,6 @@
 use crate::{
     core::models::ScrapedData,
     processors::{deduplicator::Deduplicator, normalizer::Normalizer, validator::Validator},
-    utils::error::ScraperError,
 };
 use anyhow::Result;
 

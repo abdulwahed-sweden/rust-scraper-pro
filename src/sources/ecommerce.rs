@@ -36,19 +36,19 @@ impl Source for EcommerceSource {
         let mut results = Vec::new();
 
         lazy_static! {
-            static ref PRICE_REGEX: Regex = Regex::new(r#"\$?(\d+[.,]?\d*)"#).unwrap();
+            static ref PRICE_REGEX: Regex = Regex::new(r#"[\$£€]?(\d+[.,]?\d*)"#).unwrap();
         }
 
-        // E-commerce product selectors
-        let product_selector = ".product, .item, [data-product], .card, .goods";
-        let title_selector = ".title, .name, .product-name, h1, h2, h3";
-        let price_selector = ".price, .cost, [data-price], .amount, .current-price";
-        let image_selector = "img[src], .image, .product-image";
-        let description_selector = ".description, .details, .product-desc";
+        // E-commerce product selectors (optimized for books.toscrape.com)
+        let product_selector = "article.product_pod, .product, .item, [data-product], .card, .goods";
+        let title_selector = "h3 > a, .title, .name, .product-name, h1, h2, h3";
+        let price_selector = "p.price_color, .price, .cost, [data-price], .amount, .current-price";
+        let image_selector = "img.thumbnail, img[src], .image, .product-image";
+        let description_selector = ".product_description, .description, .details, .product-desc";
 
         let products = ScraperEngine::select_element(&document, product_selector)?;
 
-        for product in products {
+        for _product in products {
             let mut data = ScrapedData::new(self.name().to_string(), self.base_url().to_string());
             
             // Extract product title

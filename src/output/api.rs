@@ -1,9 +1,10 @@
 use crate::core::models::ScrapedData;
+use crate::output::database::PostgresOutput;
 use anyhow::Result;
 use axum::{
     extract::{Query, State},
     http::{StatusCode, Method, Uri},
-    response::{Json, IntoResponse, Html},
+    response::{Json, IntoResponse},
     routing::{get, post},
     Router,
 };
@@ -14,10 +15,10 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tower_http::cors::{CorsLayer, Any};
-use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
 
 pub type SharedData = Arc<RwLock<Vec<ScrapedData>>>;
+pub type SharedDatabase = Option<Arc<PostgresOutput>>;
 
 #[derive(Debug, Deserialize)]
 pub struct SearchQuery {
@@ -34,15 +35,24 @@ pub struct ExportQuery {
     pub source: Option<String>,
 }
 
+#[derive(Clone)]
+pub struct AppState {
+    pub data: SharedData,
+    pub database: SharedDatabase,
+}
+
 pub struct ApiServer {
-    data: SharedData,
+    state: AppState,
     port: u16,
 }
 
 impl ApiServer {
-    pub fn new(data: SharedData, port: Option<u16>) -> Self {
+    pub fn new(data: SharedData, database: Option<Arc<PostgresOutput>>, port: Option<u16>) -> Self {
         Self {
-            data,
+            state: AppState {
+                data,
+                database,
+            },
             port: port.unwrap_or(3000),
         }
     }
@@ -79,7 +89,7 @@ impl ApiServer {
             .route("/api/export/json", get(export_json))
             .route("/api/export/csv", get(export_csv))
             .route("/api/update", post(update_data))
-            .with_state(self.data.clone())
+            .with_state(self.state.clone())
             .layer(cors)
             .layer(TraceLayer::new_for_http());
 
@@ -102,10 +112,26 @@ impl ApiServer {
     }
 
     pub async fn update_data(&self, new_data: Vec<ScrapedData>) -> Result<()> {
-        let mut data = self.data.write().await;
-        *data = new_data;
-        log::info!("API data updated with {} items", data.len());
+        use crate::output::database::DatabaseOutput;
+
+        // Update in-memory data
+        let mut data = self.state.data.write().await;
+        *data = new_data.clone();
+        log::info!("API in-memory data updated with {} items", data.len());
+
+        // Update database if available
+        if let Some(db) = self.state.database.as_ref() {
+            match db.save(&new_data).await {
+                Ok(count) => log::info!("Saved {} items to database", count),
+                Err(e) => log::warn!("Failed to save to database: {}", e),
+            }
+        }
+
         Ok(())
+    }
+
+    pub fn get_state(&self) -> &AppState {
+        &self.state
     }
 }
 
@@ -119,10 +145,47 @@ async fn health_check() -> (StatusCode, Json<HashMap<&'static str, &'static str>
 }
 
 async fn get_data(
-    State(data): State<SharedData>,
+    State(state): State<AppState>,
     Query(params): Query<SearchQuery>,
 ) -> (StatusCode, Json<Vec<ScrapedData>>) {
-    let data_guard = data.read().await;
+    // Try database first if available
+    if let Some(db) = state.database.as_ref() {
+        match db.get_all(
+            params.limit.map(|l| l as i64),
+            params.offset.map(|o| o as i64)
+        ).await {
+            Ok(mut results) => {
+                // Apply additional filters
+                if let Some(query) = &params.query {
+                    results.retain(|item| {
+                        item.title.as_ref().map(|t| t.to_lowercase().contains(&query.to_lowercase())).unwrap_or(false) ||
+                        item.content.as_ref().map(|c| c.to_lowercase().contains(&query.to_lowercase())).unwrap_or(false)
+                    });
+                }
+
+                if let Some(source) = &params.source {
+                    results.retain(|item| item.source.to_lowercase().contains(&source.to_lowercase()));
+                }
+
+                if let Some(category) = &params.category {
+                    results.retain(|item|
+                        item.category.as_ref()
+                            .map(|c| c.to_lowercase().contains(&category.to_lowercase()))
+                            .unwrap_or(false)
+                    );
+                }
+
+                log::info!("Retrieved {} items from database", results.len());
+                return (StatusCode::OK, Json(results));
+            }
+            Err(e) => {
+                log::warn!("Database query failed, falling back to in-memory: {}", e);
+            }
+        }
+    }
+
+    // Fallback to in-memory data
+    let data_guard = state.data.read().await;
     let mut results: Vec<ScrapedData> = data_guard.clone();
 
     // Apply filters
@@ -138,7 +201,7 @@ async fn get_data(
     }
 
     if let Some(category) = &params.category {
-        results.retain(|item| 
+        results.retain(|item|
             item.category.as_ref()
                 .map(|c| c.to_lowercase().contains(&category.to_lowercase()))
                 .unwrap_or(false)
@@ -148,7 +211,7 @@ async fn get_data(
     // Apply pagination
     let offset = params.offset.unwrap_or(0);
     let limit = params.limit.unwrap_or(50);
-    
+
     let end_index = std::cmp::min(offset + limit, results.len());
     let paginated_results = if offset < results.len() {
         results[offset..end_index].to_vec()
@@ -156,14 +219,15 @@ async fn get_data(
         Vec::new()
     };
 
+    log::info!("Retrieved {} items from in-memory cache", paginated_results.len());
     (StatusCode::OK, Json(paginated_results))
 }
 
 async fn search_data(
-    State(data): State<SharedData>,
+    State(state): State<AppState>,
     Query(params): Query<SearchQuery>,
 ) -> (StatusCode, Json<Vec<ScrapedData>>) {
-    let data_guard = data.read().await;
+    let data_guard = state.data.read().await;
     
     let query = params.query.unwrap_or_default().to_lowercase();
     let source_filter = params.source.map(|s| s.to_lowercase());
@@ -201,8 +265,17 @@ async fn search_data(
     (StatusCode::OK, Json(results))
 }
 
-async fn get_sources(State(data): State<SharedData>) -> (StatusCode, Json<Vec<String>>) {
-    let data_guard = data.read().await;
+async fn get_sources(State(state): State<AppState>) -> (StatusCode, Json<Vec<String>>) {
+    // Try database first
+    if let Some(db) = state.database.as_ref() {
+        if let Ok(sources) = db.get_sources().await {
+            log::info!("Retrieved {} sources from database", sources.len());
+            return (StatusCode::OK, Json(sources));
+        }
+    }
+
+    // Fallback to in-memory
+    let data_guard = state.data.read().await;
     let mut sources: Vec<String> = data_guard
         .iter()
         .map(|item| item.source.clone())
@@ -214,8 +287,8 @@ async fn get_sources(State(data): State<SharedData>) -> (StatusCode, Json<Vec<St
     (StatusCode::OK, Json(sources))
 }
 
-async fn get_stats(State(data): State<SharedData>) -> (StatusCode, Json<HashMap<String, usize>>) {
-    let data_guard = data.read().await;
+async fn get_stats(State(state): State<AppState>) -> (StatusCode, Json<HashMap<String, usize>>) {
+    let data_guard = state.data.read().await;
     let mut stats = HashMap::new();
     
     stats.insert("total_items".to_string(), data_guard.len());
@@ -238,13 +311,13 @@ async fn get_stats(State(data): State<SharedData>) -> (StatusCode, Json<HashMap<
     (StatusCode::OK, Json(stats))
 }
 
-async fn export_json(State(data): State<SharedData>) -> (StatusCode, Json<Vec<ScrapedData>>) {
-    let data_guard = data.read().await;
+async fn export_json(State(state): State<AppState>) -> (StatusCode, Json<Vec<ScrapedData>>) {
+    let data_guard = state.data.read().await;
     (StatusCode::OK, Json(data_guard.clone()))
 }
 
-async fn export_csv(State(data): State<SharedData>) -> (StatusCode, String) {
-    let data_guard = data.read().await;
+async fn export_csv(State(state): State<AppState>) -> (StatusCode, String) {
+    let data_guard = state.data.read().await;
     
     let mut wtr = csv::Writer::from_writer(Vec::new());
     
@@ -279,10 +352,10 @@ async fn export_csv(State(data): State<SharedData>) -> (StatusCode, String) {
 }
 
 async fn update_data(
-    State(data): State<SharedData>,
+    State(state): State<AppState>,
     Json(new_data): Json<Vec<ScrapedData>>,
 ) -> (StatusCode, Json<HashMap<&'static str, String>>) {
-    let mut data_guard = data.write().await;
+    let mut data_guard = state.data.write().await;
     let count = new_data.len();
     *data_guard = new_data;
 

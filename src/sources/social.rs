@@ -87,7 +87,7 @@ impl SocialSource {
 
         let tweets = ScraperEngine::select_element(document, tweet_selector)?;
 
-        for tweet in tweets {
+        for _tweet in tweets {
             let mut data = ScrapedData::new(self.name().to_string(), self.base_url().to_string());
             
             // Extract content
@@ -143,7 +143,7 @@ impl SocialSource {
 
         let posts = ScraperEngine::select_element(document, post_selector)?;
 
-        for post in posts {
+        for _post in posts {
             let mut data = ScrapedData::new(self.name().to_string(), self.base_url().to_string());
             
             // Extract title
@@ -186,7 +186,7 @@ impl SocialSource {
     fn scrape_generic_social(&self, document: &scraper::Html, results: &mut Vec<ScrapedData>) -> Result<()> {
         // Generic social media scraping
         let post_selector = "article, .post, .card, .feed-item";
-        let content_selector = ".content, .text, .body";
+        let _content_selector = ".content, .text, .body";
         let author_selector = ".author, .user, .username";
 
         let posts = ScraperEngine::select_element(document, post_selector)?;

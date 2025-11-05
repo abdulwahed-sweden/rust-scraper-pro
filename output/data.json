@@ -1,15 +1,32 @@
 [
   {
-    "id": "fc4c7220-0adb-4af6-803c-9d50891dc0ca",
-    "source": "Reddit Frontpage",
-    "url": "https://reddit.com",
-    "title": null,
-    "content": "Asmongold defends trans people against his chat, saying he'd fully respect his child's pronouns and identity r/LivestreamFail r/LivestreamFail The place for all things livestreaming. Members Online Asmongold defends trans people against his chat, saying he'd fully respect his child's pronouns and identity .buffering-track-fill { stroke-dasharray: 100; stroke-dashoffset: 50; } Sorry, something went wrong when loading this video. View in app",
-    "price": null,
-    "image_url": null,
+    "id": "0891d4ed-38ec-4a5e-a3a2-e800e00b5f1b",
+    "source": "Books to Scrape",
+    "url": "https://books.toscrape.com",
+    "title": "All products",
+    "content": null,
+    "price": 51.77,
+    "image_url": "media/cache/2c/da/2cdad67c44b002e7ead0cc35693c0e8b.jpg",
     "author": null,
-    "timestamp": "2025-11-04T23:09:37.611359Z",
-    "metadata": {},
+    "timestamp": "2025-11-05T00:23:43.542955Z",
+    "metadata": {
+      "price_text": "£51.77"
+    },
+    "category": null
+  },
+  {
+    "id": "83185d57-a58f-412f-96e1-2fcaa56850ef",
+    "source": "Science Books",
+    "url": "https://books.toscrape.com/catalogue/category/books/science_22/index.html",
+    "title": "Science",
+    "content": null,
+    "price": 42.96,
+    "image_url": "../../../../media/cache/d4/8d/d48d5122a15347e9fe2b15ad354d69bf.jpg",
+    "author": null,
+    "timestamp": "2025-11-05T00:23:46.049710Z",
+    "metadata": {
+      "price_text": "£42.96"
+    },
     "category": null
   }
 ]
