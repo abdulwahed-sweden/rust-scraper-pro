@@ -1,0 +1,20 @@
+# Rust Scraper Pro Configuration
+
+[scraping]
+rate_limit_ms = 1000
+timeout_seconds = 30
+max_retries = 3
+user_agent = "RustScraperPro/1.0"
+follow_robots_txt = true
+
+# Books to Scrape - Legal scraping practice site
+[[sources]]
+name = "Books to Scrape"
+url = "https://books.toscrape.com"
+rate_limit_ms = 1000
+
+[sources.selectors]
+container = "article.product_pod"
+title = "h3 a"
+price = "p.price_color"
+image = "div.image_container img"

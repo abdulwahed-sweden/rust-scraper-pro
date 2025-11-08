@@ -1,6 +1,6 @@
 [
   {
-    "id": "9be7e32a-debe-4107-80fd-03a9a48e2ff7",
+    "id": "fa3d41b0-7a2e-4d32-bd0a-f18ab23cf352",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html",
     "title": "A Light in the Attic",
@@ -8,17 +8,17 @@
     "price": 51.77,
     "image_url": "https://books.toscrape.com/media/cache/2c/da/2cdad67c44b002e7ead0cc35693c0e8b.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.935825Z",
+    "timestamp": "2025-11-08T11:51:57.403676Z",
     "metadata": {
-      "availability": "In stock",
-      "rating": "Three",
       "price_text": "£51.77",
-      "currency": "GBP"
+      "currency": "GBP",
+      "availability": "In stock",
+      "rating": "Three"
     },
     "category": "Books"
   },
   {
-    "id": "1226eabf-22d3-47ba-938a-2297f64d858c",
+    "id": "2d19eb0a-524a-442f-8bcd-68c4ccd78e42",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/tipping-the-velvet_999/index.html",
     "title": "Tipping the Velvet",
@@ -26,17 +26,17 @@
     "price": 53.74,
     "image_url": "https://books.toscrape.com/media/cache/26/0c/260c6ae16bce31c8f8c95daddd9f4a1c.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.943933Z",
+    "timestamp": "2025-11-08T11:51:57.411248Z",
     "metadata": {
       "rating": "One",
+      "currency": "GBP",
       "availability": "In stock",
-      "price_text": "£53.74",
-      "currency": "GBP"
+      "price_text": "£53.74"
     },
     "category": "Books"
   },
   {
-    "id": "6c1a2d60-633a-4ad5-be2e-26de7ea7dce8",
+    "id": "9edecfe9-e9f8-4d7a-86f1-9a7ff5dc64fc",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/soumission_998/index.html",
     "title": "Soumission",
@@ -44,17 +44,17 @@
     "price": 50.1,
     "image_url": "https://books.toscrape.com/media/cache/3e/ef/3eef99c9d9adef34639f510662022830.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944035Z",
+    "timestamp": "2025-11-08T11:51:57.411365Z",
     "metadata": {
+      "rating": "One",
       "availability": "In stock",
-      "currency": "GBP",
       "price_text": "£50.10",
-      "rating": "One"
+      "currency": "GBP"
     },
     "category": "Books"
   },
   {
-    "id": "36a40794-2554-4222-838d-f9c692669d42",
+    "id": "73c15922-75a9-4396-906d-3d4d06bb08db",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/sharp-objects_997/index.html",
     "title": "Sharp Objects",
@@ -62,17 +62,17 @@
     "price": 47.82,
     "image_url": "https://books.toscrape.com/media/cache/32/51/3251cf3a3412f53f339e42cac2134093.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944127Z",
+    "timestamp": "2025-11-08T11:51:57.411466Z",
     "metadata": {
-      "availability": "In stock",
-      "price_text": "£47.82",
       "rating": "Four",
-      "currency": "GBP"
+      "price_text": "£47.82",
+      "currency": "GBP",
+      "availability": "In stock"
     },
     "category": "Books"
   },
   {
-    "id": "56362ff0-365c-42a3-8dc0-f2f61844a351",
+    "id": "3fe893ec-1b11-45fd-9942-c6787078ee74",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html",
     "title": "Sapiens: A Brief History of Humankind",
@@ -80,17 +80,17 @@
     "price": 54.23,
     "image_url": "https://books.toscrape.com/media/cache/be/a5/bea5697f2534a2f86a3ef27b5a8c12a6.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944217Z",
+    "timestamp": "2025-11-08T11:51:57.411570Z",
     "metadata": {
       "price_text": "£54.23",
       "currency": "GBP",
-      "rating": "Five",
-      "availability": "In stock"
+      "availability": "In stock",
+      "rating": "Five"
     },
     "category": "Books"
   },
   {
-    "id": "dd2df76e-5513-463a-af8f-ecf00cb824d0",
+    "id": "ecce0d15-a34f-4958-9d1d-68cc12163ba1",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/the-requiem-red_995/index.html",
     "title": "The Requiem Red",
@@ -98,17 +98,17 @@
     "price": 22.65,
     "image_url": "https://books.toscrape.com/media/cache/68/33/68339b4c9bc034267e1da611ab3b34f8.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944310Z",
+    "timestamp": "2025-11-08T11:51:57.411687Z",
     "metadata": {
-      "currency": "GBP",
       "rating": "One",
-      "availability": "In stock",
-      "price_text": "£22.65"
+      "price_text": "£22.65",
+      "currency": "GBP",
+      "availability": "In stock"
     },
     "category": "Books"
   },
   {
-    "id": "33ee238f-b8f4-429b-b3ba-14c360272212",
+    "id": "28d93441-7d80-4b37-8d87-8a4935ff6d66",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/the-dirty-little-secrets-of-getting-your-dream-job_994/index.html",
     "title": "The Dirty Little Secrets of Getting Your Dream Job",
@@ -116,17 +116,17 @@
     "price": 33.34,
     "image_url": "https://books.toscrape.com/media/cache/92/27/92274a95b7c251fea59a2b8a78275ab4.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944401Z",
+    "timestamp": "2025-11-08T11:51:57.411805Z",
     "metadata": {
       "rating": "Four",
       "availability": "In stock",
-      "currency": "GBP",
-      "price_text": "£33.34"
+      "price_text": "£33.34",
+      "currency": "GBP"
     },
     "category": "Books"
   },
   {
-    "id": "9581aef7-2700-400a-b3f4-37a46caf57dd",
+    "id": "97f06ab9-a6f7-4fe1-9698-5570e8a7bc2e",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/the-coming-woman-a-novel-based-on-the-life-of-the-infamous-feminist-victoria-woodhull_993/index.html",
     "title": "The Coming Woman: A Novel Based on the Life of the Infamous Feminist, Victoria Woodhull",
@@ -134,17 +134,17 @@
     "price": 17.93,
     "image_url": "https://books.toscrape.com/media/cache/3d/54/3d54940e57e662c4dd1f3ff00c78cc64.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944492Z",
+    "timestamp": "2025-11-08T11:51:57.411898Z",
     "metadata": {
       "price_text": "£17.93",
       "rating": "Three",
-      "availability": "In stock",
-      "currency": "GBP"
+      "currency": "GBP",
+      "availability": "In stock"
     },
     "category": "Books"
   },
   {
-    "id": "27001987-b601-426a-9b07-7a8bc420b66f",
+    "id": "2211c44d-39d5-467f-b9ee-d2c5296fe328",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/the-boys-in-the-boat-nine-americans-and-their-epic-quest-for-gold-at-the-1936-berlin-olympics_992/index.html",
     "title": "The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics",
@@ -152,17 +152,17 @@
     "price": 22.6,
     "image_url": "https://books.toscrape.com/media/cache/66/88/66883b91f6804b2323c8369331cb7dd1.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944582Z",
+    "timestamp": "2025-11-08T11:51:57.411991Z",
     "metadata": {
-      "rating": "Four",
       "currency": "GBP",
+      "rating": "Four",
       "availability": "In stock",
       "price_text": "£22.60"
     },
     "category": "Books"
   },
   {
-    "id": "551f5b77-c66a-4766-abbe-4ad30df1d5ae",
+    "id": "34c1c71a-b0ed-40dc-b513-92d24484393d",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/the-black-maria_991/index.html",
     "title": "The Black Maria",
@@ -170,17 +170,17 @@
     "price": 52.15,
     "image_url": "https://books.toscrape.com/media/cache/58/46/5846057e28022268153beff6d352b06c.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944674Z",
+    "timestamp": "2025-11-08T11:51:57.412087Z",
     "metadata": {
-      "price_text": "£52.15",
       "currency": "GBP",
       "rating": "One",
-      "availability": "In stock"
+      "availability": "In stock",
+      "price_text": "£52.15"
     },
     "category": "Books"
   },
   {
-    "id": "4d08b393-1800-421a-906e-83807a2fea2e",
+    "id": "d7dce928-d95f-4765-9ed7-4f5535a04acb",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/starving-hearts-triangular-trade-trilogy-1_990/index.html",
     "title": "Starving Hearts (Triangular Trade Trilogy, #1)",
@@ -188,17 +188,17 @@
     "price": 13.99,
     "image_url": "https://books.toscrape.com/media/cache/be/f4/bef44da28c98f905a3ebec0b87be8530.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944779Z",
+    "timestamp": "2025-11-08T11:51:57.412180Z",
     "metadata": {
-      "rating": "Two",
-      "availability": "In stock",
       "price_text": "£13.99",
+      "availability": "In stock",
+      "rating": "Two",
       "currency": "GBP"
     },
     "category": "Books"
   },
   {
-    "id": "58f83e0c-2f3c-48a9-bf7b-e2a18b116756",
+    "id": "72241dac-47fa-47c5-9ab6-bb6afbfcaf35",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/shakespeares-sonnets_989/index.html",
     "title": "Shakespeare's Sonnets",
@@ -206,17 +206,17 @@
     "price": 20.66,
     "image_url": "https://books.toscrape.com/media/cache/10/48/1048f63d3b5061cd2f424d20b3f9b666.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944870Z",
+    "timestamp": "2025-11-08T11:51:57.412272Z",
     "metadata": {
+      "price_text": "£20.66",
       "rating": "Four",
-      "currency": "GBP",
       "availability": "In stock",
-      "price_text": "£20.66"
+      "currency": "GBP"
     },
     "category": "Books"
   },
   {
-    "id": "1b2fbef3-7276-4725-a16e-daa991262254",
+    "id": "995daf64-9bcc-4b25-95b0-f2bc0d0227e0",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/set-me-free_988/index.html",
     "title": "Set Me Free",
@@ -224,17 +224,17 @@
     "price": 17.46,
     "image_url": "https://books.toscrape.com/media/cache/5b/88/5b88c52633f53cacf162c15f4f823153.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.944960Z",
+    "timestamp": "2025-11-08T11:51:57.412365Z",
     "metadata": {
+      "availability": "In stock",
       "price_text": "£17.46",
-      "rating": "Five",
       "currency": "GBP",
-      "availability": "In stock"
+      "rating": "Five"
     },
     "category": "Books"
   },
   {
-    "id": "2cd7b62c-5371-42ba-bf96-daa969ba2bce",
+    "id": "236e7768-dcf4-4cdc-8874-3e4e20b6b61a",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/scott-pilgrims-precious-little-life-scott-pilgrim-1_987/index.html",
     "title": "Scott Pilgrim's Precious Little Life (Scott Pilgrim #1)",
@@ -242,17 +242,17 @@
     "price": 52.29,
     "image_url": "https://books.toscrape.com/media/cache/94/b1/94b1b8b244bce9677c2f29ccc890d4d2.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945050Z",
+    "timestamp": "2025-11-08T11:51:57.412457Z",
     "metadata": {
       "availability": "In stock",
-      "rating": "Five",
+      "currency": "GBP",
       "price_text": "£52.29",
-      "currency": "GBP"
+      "rating": "Five"
     },
     "category": "Books"
   },
   {
-    "id": "c76eeeea-3ca0-4d68-aef2-80fee4f0428b",
+    "id": "a05e0089-3dc4-407d-901b-7a755f632475",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/rip-it-up-and-start-again_986/index.html",
     "title": "Rip it Up and Start Again",
@@ -260,17 +260,17 @@
     "price": 35.02,
     "image_url": "https://books.toscrape.com/media/cache/81/c4/81c4a973364e17d01f217e1188253d5e.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945139Z",
+    "timestamp": "2025-11-08T11:51:57.412549Z",
     "metadata": {
-      "rating": "Five",
-      "currency": "GBP",
+      "availability": "In stock",
       "price_text": "£35.02",
-      "availability": "In stock"
+      "currency": "GBP",
+      "rating": "Five"
     },
     "category": "Books"
   },
   {
-    "id": "c45ef378-ab47-40fe-8109-1f4eea469999",
+    "id": "59e7ce22-c05c-476b-8bf3-e3384d844aaa",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/our-band-could-be-your-life-scenes-from-the-american-indie-underground-1981-1991_985/index.html",
     "title": "Our Band Could Be Your Life: Scenes from the American Indie Underground, 1981-1991",
@@ -278,17 +278,17 @@
     "price": 57.25,
     "image_url": "https://books.toscrape.com/media/cache/54/60/54607fe8945897cdcced0044103b10b6.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945233Z",
+    "timestamp": "2025-11-08T11:51:57.412641Z",
     "metadata": {
       "currency": "GBP",
-      "rating": "Three",
       "availability": "In stock",
+      "rating": "Three",
       "price_text": "£57.25"
     },
     "category": "Books"
   },
   {
-    "id": "aa0e9ced-8e22-43be-9c71-e49695755394",
+    "id": "e79e077c-b91b-4941-95fc-8da893f90a8f",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/olio_984/index.html",
     "title": "Olio",
@@ -296,17 +296,17 @@
     "price": 23.88,
     "image_url": "https://books.toscrape.com/media/cache/55/33/553310a7162dfbc2c6d19a84da0df9e1.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945324Z",
+    "timestamp": "2025-11-08T11:51:57.412740Z",
     "metadata": {
-      "price_text": "£23.88",
-      "availability": "In stock",
       "currency": "GBP",
-      "rating": "One"
+      "availability": "In stock",
+      "rating": "One",
+      "price_text": "£23.88"
     },
     "category": "Books"
   },
   {
-    "id": "23ff3f18-221e-40a6-8847-8002d7c4e457",
+    "id": "90e14fe0-d181-45b8-8833-bee7930abb30",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html",
     "title": "Mesaerion: The Best Science Fiction Stories 1800-1849",
@@ -314,17 +314,17 @@
     "price": 37.59,
     "image_url": "https://books.toscrape.com/media/cache/09/a3/09a3aef48557576e1a85ba7efea8ecb7.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945414Z",
+    "timestamp": "2025-11-08T11:51:57.412834Z",
     "metadata": {
-      "rating": "One",
-      "currency": "GBP",
       "availability": "In stock",
+      "currency": "GBP",
+      "rating": "One",
       "price_text": "£37.59"
     },
     "category": "Books"
   },
   {
-    "id": "f62773fd-d348-42bd-b978-bec787e82c6d",
+    "id": "57f76dd9-87fd-4da2-b240-97941c72b21c",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/libertarianism-for-beginners_982/index.html",
     "title": "Libertarianism for Beginners",
@@ -332,17 +332,17 @@
     "price": 51.33,
     "image_url": "https://books.toscrape.com/media/cache/0b/bc/0bbcd0a6f4bcd81ccb1049a52736406e.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945504Z",
+    "timestamp": "2025-11-08T11:51:57.412926Z",
     "metadata": {
-      "currency": "GBP",
-      "price_text": "£51.33",
       "availability": "In stock",
+      "price_text": "£51.33",
+      "currency": "GBP",
       "rating": "Two"
     },
     "category": "Books"
   },
   {
-    "id": "9849b0c4-1aad-48be-8b4a-6dcf20c12775",
+    "id": "3134a453-adb0-4994-a4e9-72ac2f52a600",
     "source": "Books to Scrape",
     "url": "https://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html",
     "title": "It's Only the Himalayas",
@@ -350,17 +350,17 @@
     "price": 45.17,
     "image_url": "https://books.toscrape.com/media/cache/27/a5/27a53d0bb95bdd88288eaf66c9230d7e.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:11.945598Z",
+    "timestamp": "2025-11-08T11:51:57.413017Z",
     "metadata": {
+      "availability": "In stock",
       "currency": "GBP",
       "price_text": "£45.17",
-      "availability": "In stock",
       "rating": "Two"
     },
     "category": "Books"
   },
   {
-    "id": "d80fddc8-4a3d-4a3d-92cc-5ec2dac1c98c",
+    "id": "04c94bda-e247-448a-ad90-80badd5c205c",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-most-perfect-thing-inside-and-outside-a-birds-egg_938/index.html",
     "title": "The Most Perfect Thing: Inside (and Outside) a Bird's Egg",
@@ -368,17 +368,17 @@
     "price": 42.96,
     "image_url": "https://books.toscrape.com/media/cache/d4/8d/d48d5122a15347e9fe2b15ad354d69bf.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291312Z",
+    "timestamp": "2025-11-08T11:51:59.763593Z",
     "metadata": {
-      "price_text": "£42.96",
-      "currency": "GBP",
       "availability": "In stock",
-      "rating": "Four"
+      "rating": "Four",
+      "currency": "GBP",
+      "price_text": "£42.96"
     },
     "category": "Science"
   },
   {
-    "id": "0e0d9012-228a-40c4-9594-88ed90407c40",
+    "id": "912f53b1-0171-4d76-b020-5bc1df182632",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/immunity-how-elie-metchnikoff-changed-the-course-of-modern-medicine_900/index.html",
     "title": "Immunity: How Elie Metchnikoff Changed the Course of Modern Medicine",
@@ -386,17 +386,17 @@
     "price": 57.36,
     "image_url": "https://books.toscrape.com/media/cache/26/1c/261c4eaf957ae4aacf2229b482e76dbe.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291453Z",
+    "timestamp": "2025-11-08T11:51:59.763751Z",
     "metadata": {
-      "currency": "GBP",
-      "price_text": "£57.36",
       "rating": "Five",
+      "price_text": "£57.36",
+      "currency": "GBP",
       "availability": "In stock"
     },
     "category": "Science"
   },
   {
-    "id": "f6b04b3c-5096-466a-b48e-13ae10f1f53b",
+    "id": "24024103-8952-43fc-a028-2f8d9b986fe3",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/sorting-the-beef-from-the-bull-the-science-of-food-fraud-forensics_736/index.html",
     "title": "Sorting the Beef from the Bull: The Science of Food Fraud Forensics",
@@ -404,17 +404,17 @@
     "price": 44.74,
     "image_url": "https://books.toscrape.com/media/cache/68/ca/68caaf9ac41964d5167a3eb67c638393.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291545Z",
+    "timestamp": "2025-11-08T11:51:59.763845Z",
     "metadata": {
       "price_text": "£44.74",
-      "currency": "GBP",
       "rating": "Four",
-      "availability": "In stock"
+      "availability": "In stock",
+      "currency": "GBP"
     },
     "category": "Science"
   },
   {
-    "id": "fc28596d-5718-46a5-8406-c191c62155c8",
+    "id": "ace72d38-4fde-481a-949b-800df1a0fac1",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/tipping-point-for-planet-earth-how-close-are-we-to-the-edge_643/index.html",
     "title": "Tipping Point for Planet Earth: How Close Are We to the Edge?",
@@ -422,17 +422,17 @@
     "price": 37.55,
     "image_url": "https://books.toscrape.com/media/cache/56/97/5697f2f8f628129df01c5790985ffd9b.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291639Z",
+    "timestamp": "2025-11-08T11:51:59.763938Z",
     "metadata": {
-      "price_text": "£37.55",
       "availability": "In stock",
-      "rating": "One",
-      "currency": "GBP"
+      "currency": "GBP",
+      "price_text": "£37.55",
+      "rating": "One"
     },
     "category": "Science"
   },
   {
-    "id": "c6695fb5-d8b1-4cac-8887-1285b8b85fe3",
+    "id": "c78d72a6-ded5-4808-a0c3-b60c231a4b3a",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-fabric-of-the-cosmos-space-time-and-the-texture-of-reality_572/index.html",
     "title": "The Fabric of the Cosmos: Space, Time, and the Texture of Reality",
@@ -440,17 +440,17 @@
     "price": 55.91,
     "image_url": "https://books.toscrape.com/media/cache/5e/7f/5e7f7d9913d4c95d33904770c518d537.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291728Z",
+    "timestamp": "2025-11-08T11:51:59.764031Z",
     "metadata": {
       "availability": "In stock",
-      "rating": "One",
+      "price_text": "£55.91",
       "currency": "GBP",
-      "price_text": "£55.91"
+      "rating": "One"
     },
     "category": "Science"
   },
   {
-    "id": "9b3d558f-21c6-428c-8a87-69a06aa6c773",
+    "id": "a78bf40c-9944-4555-9d59-c4367d4a9958",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/diary-of-a-citizen-scientist-chasing-tiger-beetles-and-other-new-ways-of-engaging-the-world_517/index.html",
     "title": "Diary of a Citizen Scientist: Chasing Tiger Beetles and Other New Ways of Engaging the World",
@@ -458,17 +458,17 @@
     "price": 28.41,
     "image_url": "https://books.toscrape.com/media/cache/33/4f/334fd0ebdf0c0192baf5914d199c53b5.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291818Z",
+    "timestamp": "2025-11-08T11:51:59.764145Z",
     "metadata": {
+      "rating": "One",
       "price_text": "£28.41",
-      "currency": "GBP",
       "availability": "In stock",
-      "rating": "One"
+      "currency": "GBP"
     },
     "category": "Science"
   },
   {
-    "id": "34573d25-0aa2-4b7d-87b4-072bd3e8b483",
+    "id": "438fbdcd-baef-41e6-8e7f-b4c1f9cb3687",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-origin-of-species_499/index.html",
     "title": "The Origin of Species",
@@ -476,17 +476,17 @@
     "price": 10.01,
     "image_url": "https://books.toscrape.com/media/cache/da/0d/da0d13699a090516502257a4d7da623f.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291906Z",
+    "timestamp": "2025-11-08T11:51:59.764237Z",
     "metadata": {
       "rating": "Four",
-      "price_text": "£10.01",
+      "availability": "In stock",
       "currency": "GBP",
-      "availability": "In stock"
+      "price_text": "£10.01"
     },
     "category": "Science"
   },
   {
-    "id": "fa556f13-cccb-4559-be08-ef5aad8b8a12",
+    "id": "ca4f07e3-561b-4157-96b5-8cc9465c8e50",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-grand-design_405/index.html",
     "title": "The Grand Design",
@@ -494,17 +494,17 @@
     "price": 13.76,
     "image_url": "https://books.toscrape.com/media/cache/08/a9/08a957eb34f8047862e225774c3bdde2.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.291998Z",
+    "timestamp": "2025-11-08T11:51:59.764340Z",
     "metadata": {
-      "rating": "Three",
-      "currency": "GBP",
       "availability": "In stock",
-      "price_text": "£13.76"
+      "rating": "Three",
+      "price_text": "£13.76",
+      "currency": "GBP"
     },
     "category": "Science"
   },
   {
-    "id": "e47aeedc-1201-4eb6-825b-030b40235069",
+    "id": "626a68e5-98d6-4ac6-96a1-f7cbba4c7c39",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/peak-secrets-from-the-new-science-of-expertise_389/index.html",
     "title": "Peak: Secrets from the New Science of Expertise",
@@ -512,17 +512,17 @@
     "price": 16.28,
     "image_url": "https://books.toscrape.com/media/cache/83/ab/83ab65f938b24fa1a9cb47235be49b57.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.292086Z",
+    "timestamp": "2025-11-08T11:51:59.764541Z",
     "metadata": {
-      "price_text": "£16.28",
+      "currency": "GBP",
       "availability": "In stock",
       "rating": "Two",
-      "currency": "GBP"
+      "price_text": "£16.28"
     },
     "category": "Science"
   },
   {
-    "id": "fbd14e7c-8b2a-4033-bfa1-df6b25336a79",
+    "id": "ae022285-026e-488f-87da-f06bdd4e3820",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-elegant-universe-superstrings-hidden-dimensions-and-the-quest-for-the-ultimate-theory_245/index.html",
     "title": "The Elegant Universe: Superstrings, Hidden Dimensions, and the Quest for the Ultimate Theory",
@@ -530,17 +530,17 @@
     "price": 13.03,
     "image_url": "https://books.toscrape.com/media/cache/69/c8/69c83860995cde393dbe6690ec3f1d4f.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.292179Z",
+    "timestamp": "2025-11-08T11:51:59.764703Z",
     "metadata": {
+      "rating": "Four",
       "currency": "GBP",
-      "price_text": "£13.03",
       "availability": "In stock",
-      "rating": "Four"
+      "price_text": "£13.03"
     },
     "category": "Science"
   },
   {
-    "id": "bc3fb64d-0833-4913-8638-e4548e7bec3f",
+    "id": "f5968f7d-3851-4bc1-ba45-000fe99d1445",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-disappearing-spoon-and-other-true-tales-of-madness-love-and-the-history-of-the-world-from-the-periodic-table-of-the-elements_244/index.html",
     "title": "The Disappearing Spoon: And Other True Tales of Madness, Love, and the History of the World from the Periodic Table of the Elements",
@@ -548,17 +548,17 @@
     "price": 57.35,
     "image_url": "https://books.toscrape.com/media/cache/f9/69/f969969428b505970a46272fdcea00d3.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.292269Z",
+    "timestamp": "2025-11-08T11:51:59.764812Z",
     "metadata": {
+      "rating": "Five",
       "availability": "In stock",
       "price_text": "£57.35",
-      "currency": "GBP",
-      "rating": "Five"
+      "currency": "GBP"
     },
     "category": "Science"
   },
   {
-    "id": "ec6fa44f-720c-48b2-9d13-061be143b032",
+    "id": "15441b7e-e342-45a0-ad66-89d30c72f3eb",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/surely-youre-joking-mr-feynman-adventures-of-a-curious-character_227/index.html",
     "title": "Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character",
@@ -566,17 +566,17 @@
     "price": 25.83,
     "image_url": "https://books.toscrape.com/media/cache/f8/bc/f8bcd489d33473e0819beaecccd5ebac.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.292361Z",
+    "timestamp": "2025-11-08T11:51:59.764991Z",
     "metadata": {
       "price_text": "£25.83",
-      "rating": "Two",
       "availability": "In stock",
+      "rating": "Two",
       "currency": "GBP"
     },
     "category": "Science"
   },
   {
-    "id": "4c4e6a1f-c0b3-4ab7-8194-9cb40251d696",
+    "id": "4b1ed3be-0896-4e88-a9f8-999acf5ad270",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/seven-brief-lessons-on-physics_219/index.html",
     "title": "Seven Brief Lessons on Physics",
@@ -584,17 +584,17 @@
     "price": 30.6,
     "image_url": "https://books.toscrape.com/media/cache/c8/63/c863c222c130a1bc8685a1242dd2523d.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.292448Z",
+    "timestamp": "2025-11-08T11:51:59.765178Z",
     "metadata": {
+      "rating": "Four",
       "price_text": "£30.60",
-      "currency": "GBP",
       "availability": "In stock",
-      "rating": "Four"
+      "currency": "GBP"
     },
     "category": "Science"
   },
   {
-    "id": "c6d20f77-bd4a-40a6-8a4e-8da8a01cd93a",
+    "id": "629f2534-33f2-4d8c-b194-8fc93bd53afa",
     "source": "Science Books",
     "url": "https://books.toscrape.com/catalogue/the-selfish-gene_81/index.html",
     "title": "The Selfish Gene",
@@ -602,12 +602,12 @@
     "price": 29.45,
     "image_url": "https://books.toscrape.com/media/cache/08/14/0814f26516fb72b7391d0a742b5928a2.jpg",
     "author": null,
-    "timestamp": "2025-11-05T01:29:14.292536Z",
+    "timestamp": "2025-11-08T11:51:59.765570Z",
     "metadata": {
-      "price_text": "£29.45",
       "currency": "GBP",
       "availability": "In stock",
-      "rating": "One"
+      "rating": "One",
+      "price_text": "£29.45"
     },
     "category": "Science"
   }
