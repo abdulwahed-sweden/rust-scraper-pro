@@ -51,7 +51,8 @@ impl PostgresOutput {
                 timestamp TIMESTAMPTZ NOT NULL,
                 category VARCHAR(255),
                 metadata JSONB,
-                created_at TIMESTAMPTZ DEFAULT NOW()
+                created_at TIMESTAMPTZ DEFAULT NOW(),
+                updated_at TIMESTAMPTZ DEFAULT NOW()
             )
             "#,
             self.table_name

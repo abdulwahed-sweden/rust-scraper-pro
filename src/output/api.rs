@@ -89,6 +89,7 @@ impl ApiServer {
             .route("/api/export/json", get(export_json))
             .route("/api/export/csv", get(export_csv))
             .route("/api/update", post(update_data))
+            .route("/api/scrape", post(trigger_scrape))
             .with_state(self.state.clone())
             .layer(cors)
             .layer(TraceLayer::new_for_http());
@@ -419,6 +420,100 @@ async fn serve_index_html() -> axum::response::Response {
             "Frontend not found. Build the frontend first."
         ).into_response(),
     }
+}
+
+// Handler for triggering a new scrape
+async fn trigger_scrape(
+    State(state): State<AppState>,
+) -> (StatusCode, Json<HashMap<String, serde_json::Value>>) {
+    use crate::core::config::Config;
+    use crate::core::scraper::ScraperEngine;
+    use crate::processors::pipeline::ProcessingPipeline;
+    use crate::sources::{EcommerceSource, SourceType};
+    use crate::utils::cache::HtmlCache;
+    use crate::output::database::DatabaseOutput;
+    use std::sync::Arc;
+
+    log::info!("API: Triggering new scrape request");
+
+    // Create a scraper engine for this request
+    let config = match Config::load("config/settings.toml").await {
+        Ok(cfg) => cfg,
+        Err(e) => {
+            log::error!("Failed to load config: {}", e);
+            let mut response = HashMap::new();
+            response.insert("status".to_string(), serde_json::Value::String("error".to_string()));
+            response.insert("message".to_string(), serde_json::Value::String(format!("Failed to load config: {}", e)));
+            return (StatusCode::INTERNAL_SERVER_ERROR, Json(response));
+        }
+    };
+
+    let cache = Arc::new(HtmlCache::new_html_cache(1000, 3600));
+    let pipeline = ProcessingPipeline::new();
+    let mut engine = ScraperEngine::new(config, pipeline, Some(cache));
+
+    // Scrape from books.toscrape.com
+    let sources = vec![
+        SourceType::Ecommerce(
+            EcommerceSource::new("https://books.toscrape.com")
+                .with_name("Books to Scrape")
+        ),
+    ];
+
+    let mut all_scraped_data = Vec::new();
+
+    for source in sources {
+        match engine.scrape_source(source).await {
+            Ok(data) => {
+                log::info!("Successfully scraped {} items", data.len());
+                all_scraped_data.extend(data);
+            }
+            Err(e) => {
+                log::error!("Failed to scrape: {}", e);
+                let mut response = HashMap::new();
+                response.insert("status".to_string(), serde_json::Value::String("error".to_string()));
+                response.insert("message".to_string(), serde_json::Value::String(format!("Scraping failed: {}", e)));
+                return (StatusCode::INTERNAL_SERVER_ERROR, Json(response));
+            }
+        }
+    }
+
+    // Process the data
+    let processed_data = match engine.process_data(all_scraped_data).await {
+        Ok(data) => data,
+        Err(e) => {
+            log::error!("Failed to process data: {}", e);
+            let mut response = HashMap::new();
+            response.insert("status".to_string(), serde_json::Value::String("error".to_string()));
+            response.insert("message".to_string(), serde_json::Value::String(format!("Processing failed: {}", e)));
+            return (StatusCode::INTERNAL_SERVER_ERROR, Json(response));
+        }
+    };
+
+    let items_count = processed_data.len();
+
+    // Save to database if available
+    if let Some(db) = state.database.as_ref() {
+        match db.save(&processed_data).await {
+            Ok(count) => log::info!("Saved {} items to database", count),
+            Err(e) => log::warn!("Failed to save to database: {}", e),
+        }
+    }
+
+    // Update in-memory data
+    {
+        let mut data_guard = state.data.write().await;
+        *data_guard = processed_data;
+        log::info!("Updated in-memory data with {} items", data_guard.len());
+    }
+
+    let mut response = HashMap::new();
+    response.insert("status".to_string(), serde_json::Value::String("success".to_string()));
+    response.insert("message".to_string(), serde_json::Value::String("Scraping completed successfully".to_string()));
+    response.insert("items_scraped".to_string(), serde_json::Value::Number(items_count.into()));
+
+    log::info!("Scrape request completed: {} items", items_count);
+    (StatusCode::OK, Json(response))
 }
 
 // Helper to determine content type from file extension

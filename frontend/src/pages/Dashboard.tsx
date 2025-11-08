@@ -1,143 +1,163 @@
-import { Activity, Database, TrendingUp, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Activity, Database, TrendingUp, Zap, RefreshCw } from 'lucide-react';
 import { StatsCard } from '../components/StatsCard';
-import { ChartCard } from '../components/ChartCard';
-import { ScrapeStatusCard } from '../components/ScrapeStatusCard';
 import { DataTable } from '../components/DataTable';
-import { ScrapeLog } from '../components/ScrapeLog';
+
+const API_BASE_URL = 'http://localhost:3000';
+
+interface ScrapedData {
+  id: string;
+  source: string;
+  url: string;
+  title: string | null;
+  content: string | null;
+  price: number | null;
+  image_url: string | null;
+  author: string | null;
+  timestamp: string;
+  category: string | null;
+}
+
+interface Stats {
+  total_items: number;
+  unique_sources: number;
+  items_with_content: number;
+  items_with_price: number;
+}
 
 export function Dashboard() {
-  const mockJobs = [
-    {
-      id: '1',
-      source: 'example.com/products',
-      status: 'running' as const,
-      timestamp: '2 minutes ago',
-      itemsScraped: 1243,
-    },
-    {
-      id: '2',
-      source: 'api.data-source.io/items',
-      status: 'completed' as const,
-      timestamp: '15 minutes ago',
-      itemsScraped: 5678,
-    },
-    {
-      id: '3',
-      source: 'news-site.com/articles',
-      status: 'pending' as const,
-      timestamp: 'Scheduled for 3:00 PM',
-    },
-  ];
+  const [data, setData] = useState<ScrapedData[]>([]);
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [scraping, setScraping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const mockData = [
-    {
-      id: '1',
-      title: 'Product ABC - Premium Edition',
-      url: 'https://example.com/products/abc-premium',
-      timestamp: '2024-01-15 14:32:15',
-      status: 'scraped',
-    },
-    {
-      id: '2',
-      title: 'Data Entry XYZ - Analytics Report',
-      url: 'https://api.data-source.io/items/xyz-analytics',
-      timestamp: '2024-01-15 14:28:42',
-      status: 'scraped',
-    },
-    {
-      id: '3',
-      title: 'Article: Breaking Tech News',
-      url: 'https://news-site.com/articles/breaking-tech',
-      timestamp: '2024-01-15 14:15:03',
-      status: 'scraped',
-    },
-  ];
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-  const mockLogs = [
-    {
-      id: '1',
-      level: 'success' as const,
-      message: 'Successfully scraped 5,678 items from api.data-source.io',
-      timestamp: '14:28:42',
-    },
-    {
-      id: '2',
-      level: 'info' as const,
-      message: 'Started scraping example.com/products',
-      timestamp: '14:30:15',
-    },
-    {
-      id: '3',
-      level: 'warning' as const,
-      message: 'Rate limit approaching for news-site.com',
-      timestamp: '14:25:08',
-    },
-    {
-      id: '4',
-      level: 'error' as const,
-      message: 'Connection timeout to legacy-api.com',
-      timestamp: '14:22:33',
-    },
-  ];
+      const [dataResponse, statsResponse] = await Promise.all([
+        fetch(`${API_BASE_URL}/api/data?limit=100`),
+        fetch(`${API_BASE_URL}/api/stats`),
+      ]);
 
-  const chartData = [
-    { label: 'Monday', value: 245 },
-    { label: 'Tuesday', value: 389 },
-    { label: 'Wednesday', value: 521 },
-    { label: 'Thursday', value: 412 },
-    { label: 'Friday', value: 678 },
-    { label: 'Saturday', value: 334 },
-    { label: 'Sunday', value: 198 },
-  ];
+      if (!dataResponse.ok || !statsResponse.ok) {
+        throw new Error('Failed to fetch data from API');
+      }
+
+      const dataJson = await dataResponse.json();
+      const statsJson = await statsResponse.json();
+
+      setData(dataJson);
+      setStats(statsJson);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('Failed to load data. Make sure the backend server is running.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const triggerScrape = async () => {
+    try {
+      setScraping(true);
+      setError(null);
+      setSuccessMessage(null);
+
+      const response = await fetch(`${API_BASE_URL}/api/scrape`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to trigger scrape');
+      }
+
+      const result = await response.json();
+      setSuccessMessage(`Successfully scraped ${result.items_scraped} items!`);
+
+      // Refresh data after scraping
+      await fetchData();
+    } catch (err) {
+      console.error('Error triggering scrape:', err);
+      setError('Failed to trigger scrape. Please try again.');
+    } finally {
+      setScraping(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-display font-bold text-text-primary dark:text-text-dark mb-2">
-          Dashboard Overview
-        </h2>
-        <p className="text-text-secondary">
-          Monitor your scraping operations and data flow in real-time
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatsCard
-          title="Total Scrapes"
-          value="12,847"
-          icon={Activity}
-          trend={{ value: '12%', positive: true }}
-        />
-        <StatsCard
-          title="Data Collected"
-          value="2.4 GB"
-          icon={Database}
-          trend={{ value: '8%', positive: true }}
-        />
-        <StatsCard
-          title="Active Sources"
-          value="24"
-          icon={Zap}
-          subtitle="3 running now"
-        />
-        <StatsCard
-          title="Success Rate"
-          value="98.3%"
-          icon={TrendingUp}
-          trend={{ value: '2.1%', positive: true }}
-        />
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <ScrapeStatusCard jobs={mockJobs} />
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-display font-bold text-text-primary dark:text-text-dark mb-2">
+            Dashboard Overview
+          </h2>
+          <p className="text-text-secondary">
+            Monitor your scraping operations and data flow in real-time
+          </p>
         </div>
-        <ChartCard title="Weekly Scrape Activity" data={chartData} />
+
+        <button
+          onClick={triggerScrape}
+          disabled={scraping}
+          className="btn-primary flex items-center gap-2 px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <RefreshCw className={`w-5 h-5 ${scraping ? 'animate-spin' : ''}`} />
+          {scraping ? 'Scraping...' : 'New Scrape'}
+        </button>
       </div>
 
-      <DataTable data={mockData} />
+      {error && (
+        <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-400 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
 
-      <ScrapeLog logs={mockLogs} />
+      {successMessage && (
+        <div className="bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-400 px-4 py-3 rounded">
+          {successMessage}
+        </div>
+      )}
+
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="mt-4 text-text-secondary">Loading data...</p>
+        </div>
+      ) : (
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StatsCard
+              title="Total Items"
+              value={stats?.total_items.toLocaleString() || '0'}
+              icon={Activity}
+            />
+            <StatsCard
+              title="With Prices"
+              value={stats?.items_with_price.toLocaleString() || '0'}
+              icon={Database}
+            />
+            <StatsCard
+              title="Unique Sources"
+              value={stats?.unique_sources.toString() || '0'}
+              icon={Zap}
+            />
+            <StatsCard
+              title="With Content"
+              value={stats?.items_with_content.toLocaleString() || '0'}
+              icon={TrendingUp}
+            />
+          </div>
+
+          <DataTable data={data} onRefresh={fetchData} />
+        </>
+      )}
     </div>
   );
 }

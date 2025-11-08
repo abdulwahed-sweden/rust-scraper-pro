@@ -1,30 +1,53 @@
-[2025-11-04T22:58:45Z INFO ] Starting Rust Scraper Pro
-[2025-11-04T22:58:45Z INFO ] Scraping from: News Source
-[2025-11-04T22:58:45Z INFO ] Starting to scrape from: News Source
-[2025-11-04T22:58:45Z INFO ] Serving static files from frontend/dist
-[2025-11-04T22:58:45Z INFO ] Starting full-stack server on http://127.0.0.1:3000
-[2025-11-04T22:58:45Z INFO ] API endpoints available at http://127.0.0.1:3000/api/*
-[2025-11-04T22:58:45Z INFO ] Frontend available at http://127.0.0.1:3000
-[2025-11-04T22:58:46Z INFO ] Scraped 0 news articles from News Source
-[2025-11-04T22:58:46Z INFO ] Successfully scraped 0 items
-[2025-11-04T22:58:48Z INFO ] Scraping from: Ecommerce Source
-[2025-11-04T22:58:48Z INFO ] Starting to scrape from: Ecommerce Source
-[2025-11-04T22:59:18Z ERROR] Failed to scrape: HTTP request error: error sending request for url (https://httpbin.org/html)
-[2025-11-04T22:59:18Z INFO ] Scraping from: Twitter
-[2025-11-04T22:59:18Z INFO ] Starting to scrape from: Twitter
-[2025-11-04T22:59:18Z INFO ] Scraped 0 social posts from Twitter
-[2025-11-04T22:59:18Z INFO ] Successfully scraped 0 items
-[2025-11-04T22:59:20Z INFO ] Scraping from: Reddit Frontpage
-[2025-11-04T22:59:20Z INFO ] Starting to scrape from: Reddit Frontpage
-[2025-11-04T22:59:21Z INFO ] Scraped 3 social posts from Reddit Frontpage
-[2025-11-04T22:59:21Z INFO ] Successfully scraped 3 items
-[2025-11-04T22:59:23Z INFO ] Processing 3 items through pipeline
-[2025-11-04T22:59:23Z INFO ] Validation completed: 3 valid items
-[2025-11-04T22:59:23Z INFO ] Deduplication completed: 1 unique items
-[2025-11-04T22:59:23Z INFO ] Pipeline processing completed: 1 items remaining
-[2025-11-04T22:59:23Z INFO ] Exporting 1 processed items
-[2025-11-04T22:59:23Z INFO ] Exported 1 items to JSON
-[2025-11-04T22:59:23Z INFO ] Exported 1 items to CSV
-[2025-11-04T22:59:23Z INFO ] Cache statistics: CacheStats { entry_count: 2, hit_rate: 0.0, miss_rate: 0.0 }
-[2025-11-04T22:59:23Z INFO ] Scraping completed! Data available via API at http://localhost:3000
-[2025-11-04T22:59:23Z INFO ] Press Ctrl+C to exit...
+[2025-11-05T01:23:44Z INFO ] Starting Rust Scraper Pro
+[2025-11-05T01:23:44Z INFO ] Connected to PostgreSQL database
+[2025-11-05T01:23:44Z INFO ] relation "scraped_data" already exists, skipping
+[2025-11-05T01:23:44Z INFO ] PostgreSQL table 'scraped_data' initialized
+[2025-11-05T01:23:44Z INFO ] Database schema initialized successfully
+[2025-11-05T01:23:44Z INFO ] Scraping from: Books to Scrape
+[2025-11-05T01:23:44Z INFO ] Starting to scrape from: Books to Scrape
+[2025-11-05T01:23:44Z INFO ] Serving static files from frontend/dist
+[2025-11-05T01:23:44Z INFO ] Starting full-stack server on http://127.0.0.1:3000
+[2025-11-05T01:23:44Z INFO ] API endpoints available at http://127.0.0.1:3000/api/*
+[2025-11-05T01:23:44Z INFO ] Frontend available at http://127.0.0.1:3000
+[2025-11-05T01:23:44Z INFO ] Scraped 20 products from Books to Scrape
+[2025-11-05T01:23:44Z INFO ] Successfully scraped 20 items
+[2025-11-05T01:23:46Z INFO ] Scraping from: Science Books
+[2025-11-05T01:23:46Z INFO ] Starting to scrape from: Science Books
+[2025-11-05T01:23:47Z INFO ] Scraped 14 products from Science Books
+[2025-11-05T01:23:47Z INFO ] Successfully scraped 14 items
+[2025-11-05T01:23:49Z INFO ] Processing 34 items through pipeline
+[2025-11-05T01:23:49Z INFO ] Validation completed: 34 valid items
+[2025-11-05T01:23:49Z INFO ] Deduplication completed: 34 unique items
+[2025-11-05T01:23:49Z INFO ] Pipeline processing completed: 34 items remaining
+[2025-11-05T01:23:49Z INFO ] Exporting 34 processed items
+[2025-11-05T01:23:49Z INFO ] Exported 34 items to JSON
+[2025-11-05T01:23:49Z INFO ] Exported 34 items to CSV
+[2025-11-05T01:23:50Z INFO ] Saved 34 items to PostgreSQL
+[2025-11-05T01:23:50Z INFO ] Saved 34 items to PostgreSQL database
+[2025-11-05T01:23:50Z INFO ] Cache statistics: CacheStats { entry_count: 1, hit_rate: 0.0, miss_rate: 0.0 }
+[2025-11-05T01:23:50Z INFO ] Scraping completed! Data available via API at http://localhost:3000
+[2025-11-05T01:23:50Z INFO ] Press Ctrl+C to exit...
+[2025-11-05T01:24:09Z WARN ] Database query failed, falling back to in-memory: error occurred while decoding column "price": mismatched types; Rust type `core::option::Option<f64>` (as SQL type `FLOAT8`) is not compatible with SQL type `NUMERIC`
+[2025-11-05T01:24:09Z INFO ] Retrieved 2 items from in-memory cache
+[2025-11-05T01:24:32Z INFO ] API: Triggering new scrape request
+[2025-11-05T01:24:32Z INFO ] Starting to scrape from: Books to Scrape
+[2025-11-05T01:24:33Z INFO ] Scraped 20 products from Books to Scrape
+[2025-11-05T01:24:33Z INFO ] Successfully scraped 20 items
+[2025-11-05T01:24:33Z INFO ] Processing 20 items through pipeline
+[2025-11-05T01:24:33Z INFO ] Validation completed: 20 valid items
+[2025-11-05T01:24:33Z INFO ] Deduplication completed: 20 unique items
+[2025-11-05T01:24:33Z INFO ] Pipeline processing completed: 20 items remaining
+[2025-11-05T01:24:33Z INFO ] Saved 20 items to PostgreSQL
+[2025-11-05T01:24:33Z INFO ] Saved 20 items to database
+[2025-11-05T01:24:33Z INFO ] Updated in-memory data with 20 items
+[2025-11-05T01:24:33Z INFO ] Scrape request completed: 20 items
+[2025-11-05T01:29:55Z WARN ] Database query failed, falling back to in-memory: error occurred while decoding column "price": mismatched types; Rust type `core::option::Option<f64>` (as SQL type `FLOAT8`) is not compatible with SQL type `NUMERIC`
+[2025-11-05T01:29:55Z INFO ] Retrieved 20 items from in-memory cache
+[2025-11-05T01:29:55Z WARN ] Database query failed, falling back to in-memory: error occurred while decoding column "price": mismatched types; Rust type `core::option::Option<f64>` (as SQL type `FLOAT8`) is not compatible with SQL type `NUMERIC`
+[2025-11-05T01:29:55Z INFO ] Retrieved 20 items from in-memory cache
+[2025-11-05T01:31:12Z WARN ] Database query failed, falling back to in-memory: error occurred while decoding column "price": mismatched types; Rust type `core::option::Option<f64>` (as SQL type `FLOAT8`) is not compatible with SQL type `NUMERIC`
+[2025-11-05T01:31:12Z INFO ] Retrieved 20 items from in-memory cache
+[2025-11-05T01:31:12Z WARN ] Database query failed, falling back to in-memory: error occurred while decoding column "price": mismatched types; Rust type `core::option::Option<f64>` (as SQL type `FLOAT8`) is not compatible with SQL type `NUMERIC`
+[2025-11-05T01:31:12Z INFO ] Retrieved 20 items from in-memory cache
+[2025-11-05T01:31:47Z WARN ] Database query failed, falling back to in-memory: error occurred while decoding column "price": mismatched types; Rust type `core::option::Option<f64>` (as SQL type `FLOAT8`) is not compatible with SQL type `NUMERIC`
+[2025-11-05T01:31:47Z INFO ] Retrieved 20 items from in-memory cache
