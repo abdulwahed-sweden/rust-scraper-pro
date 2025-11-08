@@ -1,0 +1,90 @@
+   Compiling rust-scraper-pro v0.1.0 (/Users/mansour/Documents/GitHub/rust-scraper-pro)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.11s
+     Running `target/debug/examples/multi_source_ai_pipeline`
+
+🚀 Multi-Source AI Normalization Pipeline
+═══════════════════════════════════════════════════
+
+📦 Step 1: Initializing Scraper Engine...
+✅ Scraper engine ready
+
+📚 Step 2: Configuring Multiple Data Sources...
+✅ Configured 4 data sources:
+   • Books to Scrape - Main
+   • Books to Scrape - Travel
+   • Books to Scrape - Mystery
+   • Books to Scrape - Historical Fiction
+
+🔍 Step 3: Scraping Data from Multiple Sources...
+[2025-11-08T14:16:20Z INFO  rust_scraper_pro::core::scraper] Starting to scrape from: Books to Scrape - Main
+[2025-11-08T14:16:21Z INFO  rust_scraper_pro::sources::ecommerce] Scraped 20 products from Books to Scrape - Main
+   Scraping from Books to Scrape - Main... ✅ 20 items
+      💾 Saved to data/raw/books_to_scrape___main.json
+[2025-11-08T14:16:23Z INFO  rust_scraper_pro::core::scraper] Starting to scrape from: Books to Scrape - Travel
+[2025-11-08T14:16:23Z INFO  rust_scraper_pro::sources::ecommerce] Scraped 11 products from Books to Scrape - Travel
+   Scraping from Books to Scrape - Travel... ✅ 11 items
+      💾 Saved to data/raw/books_to_scrape___travel.json
+[2025-11-08T14:16:25Z INFO  rust_scraper_pro::core::scraper] Starting to scrape from: Books to Scrape - Mystery
+[2025-11-08T14:16:26Z INFO  rust_scraper_pro::sources::ecommerce] Scraped 20 products from Books to Scrape - Mystery
+   Scraping from Books to Scrape - Mystery... ✅ 20 items
+      💾 Saved to data/raw/books_to_scrape___mystery.json
+[2025-11-08T14:16:28Z INFO  rust_scraper_pro::core::scraper] Starting to scrape from: Books to Scrape - Historical Fiction
+[2025-11-08T14:16:28Z INFO  rust_scraper_pro::sources::ecommerce] Scraped 20 products from Books to Scrape - Historical Fiction
+   Scraping from Books to Scrape - Historical Fiction... ✅ 20 items
+      💾 Saved to data/raw/books_to_scrape___historical_fiction.json
+
+📊 Raw Data Collection Summary:
+   Total sources scraped: 4
+   Total raw items: 71
+      • Books to Scrape - Main: 20 items
+      • Books to Scrape - Travel: 11 items
+      • Books to Scrape - Mystery: 20 items
+      • Books to Scrape - Historical Fiction: 20 items
+
+⚙️  Step 4: Processing Through Pipeline...
+[2025-11-08T14:16:30Z INFO  rust_scraper_pro::processors::pipeline] Processing 71 items through pipeline
+[2025-11-08T14:16:30Z INFO  rust_scraper_pro::processors::validator] Validation completed: 71 valid items
+[2025-11-08T14:16:30Z INFO  rust_scraper_pro::processors::deduplicator] Deduplication completed: 68 unique items
+[2025-11-08T14:16:30Z INFO  rust_scraper_pro::processors::pipeline] Pipeline processing completed: 68 items remaining
+✅ Processed 68 items (validated, deduplicated)
+
+🤖 Step 5: AI-Powered Data Normalization...
+   Initializing DeepSeek AI client...
+   ✅ DeepSeek client connected
+[2025-11-08T14:16:30Z INFO  rust_scraper_pro::ai::deepseek_client] Testing DeepSeek API connection...
+[2025-11-08T14:16:31Z INFO  rust_scraper_pro::ai::deepseek_client] DeepSeek API response received (tokens: prompt=15, completion=1, total=16)
+[2025-11-08T14:16:31Z INFO  rust_scraper_pro::ai::deepseek_client] DeepSeek API connection test successful: OK
+   ✅ API connection verified
+
+   🔄 Normalizing 68 items with AI...
+   (This may take 30-60 seconds depending on API response time)
+
+[2025-11-08T14:16:31Z INFO  rust_scraper_pro::ai::normalizer] Starting normalization of 68 items (batch size: 25)
+[2025-11-08T14:16:31Z INFO  rust_scraper_pro::ai::normalizer] Processing batch 1/3
+[2025-11-08T14:16:31Z INFO  rust_scraper_pro::ai::normalizer] Normalizing 25 items with DeepSeek AI...
+   ⚠️  AI normalization failed: Failed to get normalization response from DeepSeek
+   Using simple normalization instead...
+
+[2025-11-08T14:17:31Z INFO  rust_scraper_pro::ai::normalizer] Using simple normalization (no AI)
+   ✅ Simple normalization completed: 68 items
+
+═══════════════════════════════════════════════════
+🎉 Multi-Source AI Pipeline Complete!
+═══════════════════════════════════════════════════
+
+📁 Output Files:
+   Raw Data:
+      • data/raw/books_to_scrape___main.json
+      • data/raw/books_to_scrape___travel.json
+      • data/raw/books_to_scrape___mystery.json
+      • data/raw/books_to_scrape___historical_fiction.json
+
+   Normalized Data:
+      • data/normalized/final.json (unified schema)
+
+💡 Next Steps:
+   1. View data/normalized/final.json to see unified output
+   2. Restart the server to load normalized data
+   3. Visit http://localhost:3000 to see results in UI
+   4. Check logs for AI normalization decisions
+
