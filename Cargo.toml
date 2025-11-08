@@ -39,6 +39,9 @@ rustls = "0.23.34"
 serde_urlencoded = "0.7.1"
 moka = { version = "0.12.11", features = ["sync", "future"] }
 md5 = "0.7"
+# AI/ML integration
+bytes = "1.10.0"
+parking_lot = "0.12.3"
 
 [dev-dependencies]
 tokio-test = "0.4.4"

@@ -89,3 +89,25 @@ container = ".athing"
 title = ".titleline > a"
 content = ".subtext"
 author = ".hnuser"
+
+# ========================================
+# ADAPTIVE DELAY CONFIGURATION
+# ========================================
+
+[scraper]
+mode = "adaptive"        # Options: "fixed" or "adaptive"
+min_delay_ms = 200       # Minimum delay between requests
+max_delay_ms = 2500      # Maximum delay between requests
+sample_size = 10         # Number of response times to track
+multiplier = 1.2         # Delay = avg_response_time * multiplier (1.2 = 20% slower)
+
+# ========================================
+# AI FEATURES (DeepSeek Integration)
+# ========================================
+
+[ai]
+enabled = true
+deepseek_model = "deepseek-chat"
+enable_selector_assistant = true
+enable_normalizer = true
+normalizer_batch_size = 50

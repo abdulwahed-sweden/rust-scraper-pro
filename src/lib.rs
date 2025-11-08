@@ -3,6 +3,7 @@ pub mod sources;
 pub mod processors;
 pub mod output;
 pub mod utils;
+pub mod ai;
 
 // Re-exports for easier access
 pub use core::models::ScrapedData;
